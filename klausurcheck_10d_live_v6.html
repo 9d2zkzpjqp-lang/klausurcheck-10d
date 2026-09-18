@@ -1,0 +1,2055 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Klausurcheck 10d – Quadratische Funktionen</title>
+  <style>
+    :root{
+      --bg:#f6f7f8;
+      --panel:#ffffff;
+      --text:#1f2328;
+      --muted:#69707a;
+      --line:#d9dde3;
+      --soft:#eef1f4;
+      --accent:#2f6f57;
+      --accent-soft:#e7f2ed;
+      --danger:#9d3c3c;
+      --shadow:0 8px 28px rgba(31,35,40,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{min-height:100vh}
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      padding:12px max(18px, env(safe-area-inset-right)) 12px max(18px, env(safe-area-inset-left));
+      background:rgba(255,255,255,.96);
+      backdrop-filter:saturate(1.1) blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .brand{font-weight:780; letter-spacing:-.02em}
+    .brand small{display:block;font-weight:550;color:var(--muted);letter-spacing:0}
+    .spacer{flex:1}
+    .status-chip{
+      display:inline-flex;align-items:center;gap:7px;
+      padding:7px 10px;border:1px solid var(--line);border-radius:999px;
+      background:#fff;color:var(--muted);font-size:.92rem;white-space:nowrap;
+    }
+    .mode-switch{
+      display:flex;gap:6px;padding:4px;background:var(--soft);border-radius:12px;
+    }
+    .mode-switch a{
+      text-decoration:none;color:var(--muted);padding:7px 10px;border-radius:9px;font-size:.9rem;
+    }
+    .mode-switch a.active{background:#fff;color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+    main{width:min(1120px, calc(100% - 28px));margin:26px auto 54px}
+    .student-main{width:min(760px, calc(100% - 28px))}
+    .hero{
+      display:flex;justify-content:space-between;gap:18px;align-items:flex-end;
+      margin:8px 0 22px;
+    }
+    h1{font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.05;margin:0;letter-spacing:-.035em}
+    .subtitle{color:var(--muted);margin:8px 0 0}
+    .panel{
+      background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:22px;margin:16px 0;
+    }
+    .panel h2{margin:0 0 5px;font-size:1.2rem;letter-spacing:-.01em}
+    .panel p.lead{margin:0;color:var(--muted)}
+    .section-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;
+    }
+    .scale-legend{
+      margin-top:10px;color:var(--muted);font-size:.9rem;display:flex;justify-content:space-between;gap:12px;
+    }
+    .rating-row{
+      display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;
+      align-items:center;padding:14px 0;border-top:1px solid var(--soft);
+    }
+    .rating-row:first-of-type{border-top:0}
+    .rating-title-wrap{min-width:0}
+    .rating-title-line{display:flex;align-items:center;gap:8px}
+    .rating-title{font-weight:700}
+    .info-btn{
+      width:28px;height:28px;border-radius:50%;border:1px solid var(--line);
+      background:#fff;color:var(--muted);font-weight:750;flex:0 0 auto;
+    }
+    .info-btn:hover,.info-btn:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+    .info-text{
+      display:none;margin-top:9px;padding:10px 12px;border-radius:11px;background:var(--soft);
+      color:#49515a;font-size:.94rem;
+    }
+    .info-text.open{display:block}
+    .rating{
+      display:flex;gap:7px;align-items:center;
+    }
+    .rating input{position:absolute;opacity:0;pointer-events:none}
+    .rating label{
+      width:42px;height:42px;border-radius:11px;border:1px solid var(--line);
+      display:grid;place-items:center;background:#fff;font-weight:720;color:#4d5660;
+      transition:.12s ease;
+      user-select:none;
+    }
+    .rating input:checked + label{
+      background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-1px);
+    }
+    .overall-card{
+      display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;
+    }
+    textarea{
+      width:100%;min-height:120px;resize:vertical;padding:14px 15px;border:1px solid var(--line);
+      border-radius:13px;background:#fff;color:var(--text);
+    }
+    textarea:focus{outline:2px solid color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent)}
+    .hint{
+      margin-top:9px;color:var(--muted);font-size:.92rem;
+    }
+    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      border:0;border-radius:12px;padding:11px 15px;font-weight:720;
+      background:var(--accent);color:#fff;
+    }
+    .btn.secondary{background:#fff;color:var(--text);border:1px solid var(--line)}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid transparent}
+    .btn.danger{background:#fff;color:var(--danger);border:1px solid #e3caca}
+    .saved{
+      display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:var(--accent-soft);color:#245643;
+    }
+    .saved.show{display:block}
+    .unsaved{
+      display:none;margin-top:12px;padding:10px 12px;border-radius:11px;
+      background:#fff7e6;border:1px solid #ead8ad;color:#6e5622;font-size:.92rem;
+    }
+    .unsaved.show{display:block}
+    .rating-row.missing{
+      margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px;
+      border-radius:12px;background:#fff4f2;outline:2px solid #e3b1aa;
+    }
+    .overall-card.missing{
+      border-radius:12px;background:#fff4f2;outline:2px solid #e3b1aa;
+      padding:10px;
+    }
+    .mini-card{
+      padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff;
+    }
+    .summary-grid{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px;
+    }
+    .metric{padding:16px;border-radius:14px;background:var(--soft)}
+    .metric b{display:block;font-size:1.5rem;line-height:1.1}
+    .metric span{color:var(--muted);font-size:.88rem}
+    .overall-score{
+      display:flex;align-items:baseline;gap:10px;white-space:nowrap;
+    }
+    .overall-score strong{font-size:2.1rem;letter-spacing:-.04em}
+    .competency-dashboard{
+      display:grid;gap:13px;
+    }
+    .comp-card{
+      border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:#fff;
+    }
+    .comp-top{display:grid;grid-template-columns:minmax(220px,1.5fr) auto minmax(300px,1fr);gap:16px;align-items:center}
+    .comp-name{font-weight:760}
+    .avg{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .dist{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:5px;
+    }
+    .dist-box{
+      background:var(--soft);border-radius:8px;padding:6px 5px;text-align:center;min-width:0;
+    }
+    .dist-box b{display:block;font-size:.98rem;line-height:1.05}
+    .dist-box small{color:var(--muted);font-size:.74rem}
+    .dist-caption{color:var(--muted);font-size:.77rem;margin-top:5px;text-align:right}
+    .question-list{display:grid;gap:10px}
+    .question{
+      display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:flex-start;
+      padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff;
+    }
+    .question.completed{opacity:.64}
+    .question.completed .qtext{text-decoration:line-through}
+    .qcheck{
+      width:26px;height:26px;margin-top:1px;
+      accent-color:var(--accent);
+    }
+    .qtext{white-space:pre-wrap;overflow-wrap:anywhere}
+    .qmeta{color:var(--muted);font-size:.83rem;margin-top:5px}
+    .icon-btn{
+      border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:9px;
+      width:34px;height:34px;
+    }
+    .icon-btn:hover{color:var(--danger);border-color:#dfc1c1}
+    details.archive{
+      margin-top:12px;border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden;
+    }
+    details.archive summary{
+      list-style:none;padding:14px 16px;font-weight:760;cursor:pointer;
+    }
+    details.archive summary::-webkit-details-marker{display:none}
+    details.archive .inside{padding:0 14px 14px}
+    .empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+    .testbar{
+      display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+      padding:11px 12px;margin-bottom:14px;border:1px dashed #c4c9d0;border-radius:13px;background:#fbfbfc;
+    }
+    .testbar strong{font-size:.9rem}
+    .testbar span{font-size:.86rem;color:var(--muted);margin-right:auto}
+    .small-btn{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;font-size:.86rem;
+    }
+    .footer-note{color:var(--muted);font-size:.85rem;text-align:center;margin-top:22px}
+    @media (max-width:760px){
+      .topbar{gap:9px}
+      .topbar .status-chip{display:none}
+      main,.student-main{width:min(100% - 18px,760px);margin-top:16px}
+      .hero{align-items:flex-start}
+      .overall-card,.rating-row{grid-template-columns:1fr}
+      .rating{justify-content:space-between}
+      .rating label{width:min(54px,16vw);height:44px}
+      .summary-grid{grid-template-columns:1fr 1fr}
+      .summary-grid .metric:first-child{grid-column:1/-1}
+      .section-head{flex-direction:column}
+      .question{grid-template-columns:auto minmax(0,1fr) auto}
+      .comp-top{grid-template-columns:1fr auto}
+      .comp-top .dist-wrap{grid-column:1/-1}
+    }
+
+    /* Dashboard v4 – näher am ursprünglichen Wireframe */
+    #dashboardView{
+      width:min(1220px, calc(100% - 28px));
+      margin-top:18px;
+    }
+    #dashboardView .dashboard-hero{
+      display:none;
+    }
+    #dashboardView .panel{
+      box-shadow:0 3px 14px rgba(31,35,40,.055);
+      border-radius:14px;
+      padding:0;
+      overflow:hidden;
+      margin:14px 0;
+    }
+    #dashboardView .panel-inner{
+      padding:18px 20px;
+    }
+    #dashboardView .dashboard-section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding:16px 20px 13px;
+      border-bottom:1px solid var(--line);
+      background:#fff;
+    }
+    #dashboardView .dashboard-section-head h2{
+      font-size:1.22rem;
+      margin:0 0 2px;
+    }
+    #dashboardView .dashboard-section-head .lead{
+      font-size:.92rem;
+    }
+
+    .overall-wire{
+      display:grid;
+      grid-template-columns:minmax(280px,1.2fr) minmax(240px,.9fr) auto;
+      align-items:center;
+      gap:24px;
+      padding:20px;
+    }
+    .overall-wire h2{
+      margin:0 0 3px;
+      font-size:1.25rem;
+    }
+    .overall-wire p{
+      margin:0;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+    .star-row{
+      display:flex;
+      justify-content:center;
+      gap:7px;
+      font-size:2.4rem;
+      line-height:1;
+      letter-spacing:-.06em;
+      color:#b5bbc2;
+      white-space:nowrap;
+    }
+    .star-row .filled{
+      color:var(--accent);
+    }
+    .overall-wire .overall-score{
+      justify-content:flex-end;
+    }
+    .overall-wire .overall-score strong{
+      font-size:2.35rem;
+    }
+    .overall-wire .score-note{
+      color:var(--muted);
+      font-size:.83rem;
+      margin-top:2px;
+      text-align:right;
+    }
+
+    .competency-dashboard{
+      display:block;
+    }
+    .comp-card{
+      border:0;
+      border-radius:0;
+      padding:12px 20px;
+      background:#fff;
+      border-top:1px solid var(--soft);
+    }
+    .comp-card:first-child{
+      border-top:0;
+    }
+    .comp-top{
+      display:grid;
+      grid-template-columns:minmax(250px,1.15fr) minmax(270px,2fr) 72px minmax(260px,1.05fr);
+      gap:18px;
+      align-items:center;
+    }
+    .comp-name{
+      font-weight:720;
+      line-height:1.25;
+    }
+    .avg-bar{
+      height:14px;
+      border-radius:999px;
+      background:#e9ecef;
+      overflow:hidden;
+      position:relative;
+    }
+    .avg-bar > span{
+      display:block;
+      height:100%;
+      background:var(--accent);
+      border-radius:inherit;
+      min-width:0;
+    }
+    .avg{
+      text-align:right;
+      font-weight:800;
+      font-variant-numeric:tabular-nums;
+    }
+    .dist-inline{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:4px;
+    }
+    .dist-mini{
+      display:grid;
+      grid-template-columns:auto auto;
+      justify-content:center;
+      gap:3px;
+      align-items:baseline;
+      padding:4px 5px;
+      border-radius:8px;
+      background:var(--soft);
+      font-variant-numeric:tabular-nums;
+    }
+    .dist-mini small{
+      color:var(--muted);
+      font-size:.68rem;
+    }
+    .dist-mini b{
+      font-size:.82rem;
+      line-height:1;
+    }
+    .comp-table-labels{
+      display:grid;
+      grid-template-columns:minmax(250px,1.15fr) minmax(270px,2fr) 72px minmax(260px,1.05fr);
+      gap:18px;
+      padding:9px 20px;
+      color:var(--muted);
+      font-size:.73rem;
+      background:#fbfcfd;
+      border-bottom:1px solid var(--soft);
+    }
+    .comp-table-labels span:nth-child(3){
+      text-align:right;
+    }
+    .comp-table-labels span:nth-child(4){
+      text-align:center;
+    }
+
+    .question-list{
+      display:grid;
+      gap:7px;
+    }
+    #openQuestions{
+      padding:10px;
+    }
+    .question{
+      display:grid;
+      grid-template-columns:30px minmax(0,1fr) auto 78px 36px;
+      gap:10px;
+      align-items:center;
+      padding:10px 11px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+    }
+    .question:hover{
+      background:#fcfdfd;
+    }
+    .question.completed{
+      opacity:.58;
+    }
+    .question .qmeta{
+      margin:0;
+      text-align:right;
+      white-space:nowrap;
+    }
+    .q-badge{
+      padding:4px 8px;
+      border-radius:999px;
+      font-size:.75rem;
+      font-weight:730;
+      background:var(--accent-soft);
+      color:#285745;
+      white-space:nowrap;
+    }
+    .q-badge.spacer{
+      visibility:hidden;
+    }
+    .qcheck{
+      width:23px;
+      height:23px;
+      margin:0;
+    }
+    .icon-btn{
+      width:32px;
+      height:32px;
+      border-radius:8px;
+    }
+    details.archive{
+      margin:10px;
+      border-radius:10px;
+    }
+    details.archive summary{
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    details.archive summary::before{
+      content:"▸";
+      color:var(--muted);
+      transition:transform .12s ease;
+    }
+    details.archive[open] summary::before{
+      transform:rotate(90deg);
+    }
+    details.archive .inside{
+      padding:0 10px 10px;
+    }
+    .dashboard-count-note{
+      color:var(--muted);
+      font-size:.88rem;
+      white-space:nowrap;
+      padding-top:2px;
+    }
+    .dashboard-updated{
+      font-variant-numeric:tabular-nums;
+    }
+
+    @media (max-width:980px){
+      .overall-wire{
+        grid-template-columns:1fr auto;
+      }
+      .star-row{
+        grid-column:1/-1;
+        grid-row:2;
+        justify-content:flex-start;
+      }
+      .comp-top,.comp-table-labels{
+        grid-template-columns:minmax(210px,1.15fr) minmax(230px,1.7fr) 70px;
+      }
+      .comp-top .dist-inline{
+        grid-column:1/-1;
+      }
+      .comp-table-labels span:nth-child(4){
+        display:none;
+      }
+      .question{
+        grid-template-columns:28px minmax(0,1fr) auto 36px;
+      }
+      .question .qmeta{
+        grid-column:2;
+        text-align:left;
+        font-size:.76rem;
+      }
+    }
+    @media (max-width:650px){
+      #dashboardView{
+        width:min(100% - 14px,1220px);
+      }
+      .overall-wire{
+        grid-template-columns:1fr;
+        gap:12px;
+      }
+      .star-row{
+        grid-column:auto;
+        grid-row:auto;
+        justify-content:flex-start;
+        font-size:2rem;
+      }
+      .overall-wire .overall-score{
+        justify-content:flex-start;
+      }
+      .overall-wire .score-note{
+        text-align:left;
+      }
+      .comp-table-labels{
+        display:none;
+      }
+      .comp-top{
+        grid-template-columns:1fr auto;
+        gap:9px 12px;
+      }
+      .comp-top .avg-bar{
+        grid-column:1/-1;
+      }
+      .comp-top .dist-inline{
+        grid-column:1/-1;
+      }
+      .question{
+        grid-template-columns:26px minmax(0,1fr) 34px;
+      }
+      .question .q-badge{
+        grid-column:2;
+        justify-self:start;
+      }
+      .question .qmeta{
+        grid-column:2;
+      }
+    }
+
+
+    .login-panel{
+      width:min(620px,100%);
+      margin:34px auto!important;
+    }
+    .login-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    .login-grid label span{
+      display:block;
+      font-size:.84rem;
+      color:var(--muted);
+      margin:0 0 5px 2px;
+    }
+    .login-grid input{
+      width:100%;
+      padding:11px 12px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      background:#fff;
+      color:var(--text);
+    }
+    .login-grid input:focus{
+      outline:2px solid color-mix(in srgb,var(--accent) 22%,transparent);
+      border-color:var(--accent);
+    }
+    .login-error{
+      display:none;
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#fff2f1;
+      border:1px solid #e4c1bd;
+      color:#7a302b;
+      font-size:.9rem;
+    }
+    .login-error.show{display:block}
+    .connection-error{
+      padding:14px 16px;
+      border:1px solid #e4c1bd;
+      background:#fff2f1;
+      border-radius:12px;
+      color:#7a302b;
+      margin:14px 0;
+    }
+    @media (max-width:650px){
+      .login-grid{grid-template-columns:1fr}
+    }
+
+
+    .toast-container{
+      position:fixed;
+      top:74px;
+      right:18px;
+      z-index:1000;
+      display:grid;
+      gap:10px;
+      width:min(360px,calc(100vw - 28px));
+      pointer-events:none;
+    }
+    .toast{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:rgba(255,255,255,.98);
+      box-shadow:0 10px 30px rgba(31,35,40,.14);
+      animation:toast-in .18s ease-out;
+    }
+    .toast-icon{
+      flex:0 0 auto;
+      width:28px;
+      height:28px;
+      display:grid;
+      place-items:center;
+      border-radius:9px;
+      background:var(--accent-soft);
+      color:var(--accent);
+      font-size:.95rem;
+    }
+    .toast-copy strong{
+      display:block;
+      font-size:.94rem;
+      line-height:1.2;
+    }
+    .toast-copy span{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:.82rem;
+      line-height:1.25;
+    }
+    .toast.out{
+      opacity:0;
+      transform:translateY(-4px);
+      transition:.18s ease;
+    }
+    .reset-btn{
+      color:var(--danger);
+      border-color:#e3caca;
+      background:#fff;
+    }
+    .reset-btn:hover{
+      background:#fff6f5;
+    }
+    @keyframes toast-in{
+      from{opacity:0;transform:translateY(-6px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    @media (max-width:650px){
+      .toast-container{
+        top:68px;
+        right:8px;
+        width:calc(100vw - 16px);
+      }
+    }
+
+
+    .report-modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:1400;
+    }
+    .report-modal.open{display:block}
+    .report-backdrop{
+      position:absolute;
+      inset:0;
+      background:rgba(28,33,38,.42);
+      backdrop-filter:blur(3px);
+    }
+    .report-sheet{
+      position:relative;
+      z-index:1;
+      width:min(1040px,calc(100% - 30px));
+      max-height:calc(100vh - 30px);
+      overflow:auto;
+      margin:15px auto;
+      background:#fff;
+      border-radius:16px;
+      box-shadow:0 18px 60px rgba(25,30,35,.22);
+    }
+    .report-toolbar{
+      position:sticky;
+      top:0;
+      z-index:2;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding:18px 20px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.97);
+      backdrop-filter:blur(12px);
+    }
+    .report-toolbar h2{margin:0;font-size:1.35rem}
+    .report-meta{margin-top:3px;color:var(--muted);font-size:.88rem}
+    .report-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .report-body{padding:20px}
+    .report-summary{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-bottom:18px;
+    }
+    .report-stat{
+      padding:13px 14px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:#fafbfc;
+    }
+    .report-stat b{display:block;font-size:1.45rem;line-height:1.1}
+    .report-stat span{display:block;color:var(--muted);font-size:.82rem;margin-top:4px}
+    .report-section{margin-top:22px}
+    .report-section h3{margin:0 0 9px;font-size:1.05rem}
+    .report-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.9rem;
+    }
+    .report-table th,.report-table td{
+      padding:8px 9px;
+      border-bottom:1px solid var(--soft);
+      text-align:left;
+      vertical-align:top;
+    }
+    .report-table th{color:var(--muted);font-size:.78rem;font-weight:700;background:#fbfcfd}
+    .report-table td.num,.report-table th.num{text-align:center;font-variant-numeric:tabular-nums}
+    .report-question{
+      padding:9px 0;
+      border-bottom:1px solid var(--soft);
+    }
+    .report-question:last-child{border-bottom:0}
+    .report-question-status{
+      display:inline-block;
+      margin-right:8px;
+      padding:2px 7px;
+      border-radius:999px;
+      background:var(--soft);
+      color:var(--muted);
+      font-size:.74rem;
+      font-weight:700;
+    }
+    .report-footer{
+      padding:12px 20px 18px;
+      color:var(--muted);
+      text-align:center;
+      font-size:.78rem;
+    }
+    @media(max-width:700px){
+      .report-summary{grid-template-columns:1fr 1fr}
+      .report-toolbar{flex-direction:column}
+      .report-actions{justify-content:flex-start}
+    }
+    @media print{
+      @page{
+        size:A4 portrait;
+        margin:14mm 12mm;
+      }
+
+      html,body{
+        background:#fff!important;
+        width:auto!important;
+        min-width:0!important;
+      }
+
+      body.report-printing{
+        margin:0!important;
+        color:#111!important;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+      }
+
+      /* Beim Drucken darf wirklich nur die Auswertung existieren.
+         So kann das Dashboard nicht hinter dem Modal "durchscheinen". */
+      body.report-printing .app > :not(.report-modal){
+        display:none!important;
+      }
+
+      body.report-printing .report-modal{
+        display:block!important;
+        position:static!important;
+        inset:auto!important;
+        width:auto!important;
+        height:auto!important;
+        overflow:visible!important;
+      }
+
+      body.report-printing .report-backdrop,
+      body.report-printing .report-toolbar .report-actions{
+        display:none!important;
+      }
+
+      body.report-printing .report-sheet{
+        display:block!important;
+        width:auto!important;
+        max-width:none!important;
+        max-height:none!important;
+        overflow:visible!important;
+        margin:0!important;
+        padding:0!important;
+        border:0!important;
+        border-radius:0!important;
+        box-shadow:none!important;
+        background:#fff!important;
+      }
+
+      body.report-printing .report-toolbar{
+        position:static!important;
+        display:block!important;
+        padding:0 0 7mm!important;
+        margin:0 0 6mm!important;
+        border-bottom:1px solid #cfd4da!important;
+        background:#fff!important;
+        backdrop-filter:none!important;
+      }
+
+      body.report-printing .report-toolbar h2{
+        margin:0 0 1.5mm!important;
+        font-size:20pt!important;
+      }
+
+      body.report-printing .report-meta{
+        font-size:9.5pt!important;
+        color:#555!important;
+      }
+
+      body.report-printing .report-body{
+        padding:0!important;
+      }
+
+      body.report-printing .report-summary{
+        grid-template-columns:repeat(4,minmax(0,1fr))!important;
+        gap:3mm!important;
+        margin:0 0 7mm!important;
+      }
+
+      body.report-printing .report-stat{
+        padding:4mm!important;
+        border:1px solid #d7dbe0!important;
+        border-radius:3mm!important;
+        background:#fafafa!important;
+        break-inside:avoid;
+      }
+
+      body.report-printing .report-stat b{
+        font-size:16pt!important;
+      }
+
+      body.report-printing .report-stat span{
+        font-size:8pt!important;
+      }
+
+      body.report-printing .report-section{
+        margin-top:7mm!important;
+        break-inside:auto;
+      }
+
+      body.report-printing .report-section h3{
+        margin:0 0 3mm!important;
+        font-size:12pt!important;
+        break-after:avoid;
+      }
+
+      body.report-printing .report-table{
+        width:100%!important;
+        table-layout:fixed!important;
+        border-collapse:collapse!important;
+        font-size:8.5pt!important;
+      }
+
+      body.report-printing .report-table th,
+      body.report-printing .report-table td{
+        padding:2.2mm 2mm!important;
+        border-bottom:1px solid #e0e3e7!important;
+        line-height:1.25!important;
+        overflow-wrap:anywhere;
+      }
+
+      /* Kompetenzname bekommt genug Platz, die sechs Zahlen-Spalten bleiben kompakt. */
+      body.report-printing .report-table th:first-child,
+      body.report-printing .report-table td:first-child{
+        width:46%!important;
+      }
+
+      body.report-printing .report-table th:not(:first-child),
+      body.report-printing .report-table td:not(:first-child){
+        width:9%!important;
+      }
+
+      body.report-printing .report-table thead{
+        display:table-header-group;
+      }
+
+      body.report-printing .report-table tr{
+        break-inside:avoid;
+      }
+
+      body.report-printing .report-question{
+        padding:2.5mm 0!important;
+        break-inside:avoid;
+        font-size:9pt!important;
+      }
+
+      body.report-printing .report-question-status{
+        font-size:7.5pt!important;
+      }
+
+      body.report-printing .report-footer{
+        margin-top:8mm!important;
+        padding:4mm 0 0!important;
+        border-top:1px solid #e0e3e7;
+        font-size:8pt!important;
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+  <header class="topbar">
+    <div class="brand">Klausurcheck 10d<small>Quadratische Funktionen und Gleichungen</small></div>
+    <div class="spacer"></div>
+    <div id="dashChips" style="display:none;gap:8px;align-items:center;flex-wrap:wrap"></div>
+    <button id="reportBtn" class="small-btn" type="button" style="display:none">Auswertung</button>
+    <button id="resetAllBtn" class="small-btn reset-btn" type="button" style="display:none">Alles zurücksetzen</button>
+    <button id="changePasswordBtn" class="small-btn" type="button" style="display:none">Passwort ändern</button>
+    <button id="logoutBtn" class="small-btn" type="button" style="display:none">Abmelden</button>
+  </header>
+
+  <main id="studentView" class="student-main" style="display:none">
+    <section class="hero">
+      <div>
+        <h1>Wie sicher fühlst du dich?</h1>
+        <p class="subtitle">Kurzer Check vor der Klausur. Bitte ehrlich einschätzen – die Angaben helfen bei der Vorbereitung.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="overallPanel">
+      <div class="overall-card" id="overallCard">
+        <div>
+          <h2>Wie sicher fühlst du dich insgesamt für die Klausur?</h2>
+          <p class="lead">1 = sehr unsicher · 5 = sehr sicher</p>
+        </div>
+        <div id="overallRating" class="rating" aria-label="Gesamtgefühl"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head">
+        <div>
+          <h2>Wie gut beherrschst du diese Kompetenzen?</h2>
+          <p class="lead">Tippe auf ⓘ, wenn du genauer wissen möchtest, was gemeint ist.</p>
+        </div>
+      </div>
+      <div class="scale-legend"><span>1 = sehr unsicher</span><span>5 = sehr sicher</span></div>
+      <div id="studentCompetencies"></div>
+      <div id="unsavedNotice" class="unsaved" role="status">Änderungen noch nicht gespeichert.</div>
+      <div class="actions">
+        <button id="saveRatings" class="btn">Einschätzung speichern</button>
+      </div>
+      <div id="ratingSaved" class="saved" role="status">✓ Deine Einschätzung wurde gespeichert. Du kannst sie später jederzeit aktualisieren.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Welche Fragen hast du noch?</h2>
+      <p class="lead">Du kannst mehrere Fragen nacheinander absenden – unabhängig von deiner Einschätzung oben.</p>
+      <div style="height:12px"></div>
+      <textarea id="questionInput" maxlength="350" placeholder="Deine Frage …"></textarea>
+      <div class="hint"><strong>Anonym ist völlig in Ordnung.</strong> Wenn du möchtest, dass ich weiß, von wem die Frage kommt, schreibe deinen Namen einfach am Ende in Klammern dazu, z. B. „… (Lena)“. <strong>Hinweis:</strong> Ein angegebener Name ist dann auch auf dem gemeinsamen Dashboard an der Tafel sichtbar.</div>
+      <div class="actions">
+        <button id="sendQuestion" class="btn">Frage absenden</button>
+        <span id="charCount" class="hint">0 / 350</span>
+      </div>
+      <div id="questionSaved" class="saved" role="status">✓ Frage wurde gespeichert.</div>
+    </section>
+
+    <section id="lastFeedbackPanel" class="panel" style="display:none">
+      <h2>Deine letzte Rückmeldung</h2>
+      <p class="lead" id="lastFeedbackText"></p>
+      <div class="actions">
+        <button class="btn secondary" id="editAgain">Einschätzung aktualisieren</button>
+      </div>
+    </section>
+
+    <p class="footer-note">Die Rückmeldung wird anonym gespeichert. Dein Browser erhält dafür lediglich eine technische, anonyme Kennung. · Version 1.0.1</p>
+  </main>
+
+  <main id="dashboardView" style="display:none">
+    <section class="hero dashboard-hero">
+      <div>
+        <h1>Übersicht 10d</h1>
+        <p class="subtitle">Kompetenzeinschätzung und offene Fragen zur Klausur.</p>
+      </div>
+    </section>
+
+
+    <section id="passwordRecoveryPanel" class="panel login-panel" style="display:none">
+      <div class="panel-inner">
+        <h2>Neues Lehrer-Passwort festlegen</h2>
+        <p class="lead">Lege jetzt ein neues Passwort für den Lehrerzugang fest.</p>
+        <div class="login-grid" style="grid-template-columns:1fr">
+          <label>
+            <span>Neues Passwort</span>
+            <input id="newTeacherPassword" type="password" autocomplete="new-password" placeholder="Mindestens 8 Zeichen">
+          </label>
+          <label>
+            <span>Passwort wiederholen</span>
+            <input id="newTeacherPassword2" type="password" autocomplete="new-password" placeholder="Passwort wiederholen">
+          </label>
+        </div>
+        <div class="actions">
+          <button id="setTeacherPasswordBtn" class="btn" type="button">Passwort speichern</button>
+        </div>
+        <div id="passwordRecoveryError" class="login-error" role="alert"></div>
+      </div>
+    </section>
+
+    <section id="teacherLoginPanel" class="panel login-panel">
+      <div class="panel-inner">
+        <h2>Lehrerzugang</h2>
+        <p class="lead">Melde dich an, um das Live-Dashboard zu sehen und Fragen abzuhaken oder auszublenden.</p>
+        <div class="login-grid">
+          <label>
+            <span>E-Mail</span>
+            <input id="teacherEmail" type="email" autocomplete="username" placeholder="E-Mail-Adresse">
+          </label>
+          <label>
+            <span>Passwort</span>
+            <input id="teacherPassword" type="password" autocomplete="current-password" placeholder="Passwort">
+          </label>
+        </div>
+        <div class="actions">
+          <button id="teacherLoginBtn" class="btn" type="button">Anmelden</button>
+          <button id="forgotPasswordBtn" class="btn secondary" type="button">Passwort festlegen / vergessen?</button>
+        </div>
+        <div id="teacherLoginError" class="login-error" role="alert"></div>
+      </div>
+    </section>
+
+    <div id="dashboardContent" style="display:none">
+    <section class="panel">
+      <div class="overall-wire">
+        <div>
+          <h2>Gesamtgefühl der Klasse</h2>
+          <p>Wie sicher fühlt sich die Klasse insgesamt für die Klausur?</p>
+        </div>
+        <div id="overallStars" class="star-row" aria-label="Durchschnittliche Sicherheit"></div>
+        <div>
+          <div class="overall-score"><strong id="overallAverage">–</strong><span>/ 5</span></div>
+          <div id="overallScoreNote" class="score-note">Noch keine Rückmeldungen</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="dashboard-section-head">
+        <div>
+          <h2>Kompetenzen</h2>
+          <p class="lead">Wie sicher fühlt sich die Klasse in den einzelnen Bereichen?</p>
+        </div>
+        <div class="dashboard-count-note">Durchschnitt + Verteilung</div>
+      </div>
+      <div class="comp-table-labels">
+        <span>Kompetenz</span>
+        <span>Durchschnitt</span>
+        <span>Ø</span>
+        <span>Verteilung 1–5</span>
+      </div>
+      <div id="dashboardCompetencies" class="competency-dashboard"></div>
+    </section>
+
+    <section class="panel">
+      <div class="dashboard-section-head">
+        <div>
+          <h2>Offene Fragen</h2>
+          <p class="lead">Neue Fragen stehen oben. Abhaken verschiebt sie nach „Erledigt“.</p>
+        </div>
+        <div id="openQuestionsLabel" class="dashboard-count-note">0 offene Fragen</div>
+      </div>
+
+      <div id="openQuestions" class="question-list"></div>
+
+      <details class="archive" id="doneDetails">
+        <summary>Erledigte Fragen (<span id="doneSummaryCount">0</span>)</summary>
+        <div class="inside"><div id="doneQuestions" class="question-list"></div></div>
+      </details>
+
+      <details class="archive" id="hiddenDetails">
+        <summary>Ausgeblendete Fragen (<span id="hiddenSummaryCount">0</span>)</summary>
+        <div class="inside"><div id="hiddenQuestions" class="question-list"></div></div>
+      </details>
+    </section>
+
+    <p class="footer-note">Live-Dashboard · automatische Aktualisierung alle 5 Sekunden · Version 1.0.1</p>
+    </div>
+  </main>
+
+  <div id="reportModal" class="report-modal" aria-hidden="true">
+    <div class="report-backdrop" data-report-close></div>
+    <section class="report-sheet" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+      <div class="report-toolbar">
+        <div>
+          <h2 id="reportTitle">Auswertung</h2>
+          <div id="reportMeta" class="report-meta"></div>
+        </div>
+        <div class="report-actions">
+          <button id="reportCsvBtn" class="small-btn" type="button">CSV exportieren</button>
+          <button id="reportPrintBtn" class="small-btn" type="button" title="Im Druckdialog ggf. Browser-Kopf- und Fußzeilen deaktivieren">Drucken / PDF</button>
+          <button id="reportCloseBtn" class="small-btn" type="button">Schließen</button>
+        </div>
+      </div>
+      <div id="reportBody" class="report-body"></div>
+      <div class="report-footer">Klausurcheck · Version 1.0.1</div>
+    </section>
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const APP_VERSION = "1.0.1";
+const SUPABASE_URL = 'https://tgokrdtlvtfyxaqscuwx.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_YKnRHgSUgHx6dj-wDHWvOA_OKEFAaaW';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+const params = new URLSearchParams(location.search);
+const view = params.get("view") === "dashboard" ? "dashboard" : "student";
+
+const competencies = [
+  {
+    id:"zuordnen",
+    title:"Parabeln & Gleichungen zuordnen/beschreiben",
+    info:"Graph und Funktionsgleichung einander zuordnen; Streckung, Stauchung, Spiegelung und Verschiebung erkennen und beschreiben."
+  },
+  {
+    id:"punkte",
+    title:"Punkte auf Parabeln",
+    info:"Punktprobe durchführen und fehlende Koordinaten bestimmen."
+  },
+  {
+    id:"gleichung",
+    title:"Funktionsgleichungen bestimmen",
+    info:"Aus gegebenen Punkten, dem Scheitelpunkt oder anderen Informationen die Funktionsgleichung einer Parabel bestimmen."
+  },
+  {
+    id:"scheitel",
+    title:"Scheitelpunkte bestimmen",
+    info:"Aus einer quadratischen Funktionsgleichung den Scheitelpunkt bestimmen."
+  },
+  {
+    id:"nullstellen",
+    title:"Quadratische Gleichungen & Nullstellen",
+    info:"Verschiedene Formen und Sonderfälle erkennen, ein geeignetes Lösungsverfahren auswählen und Nullstellen bestimmen."
+  },
+  {
+    id:"schnittpunkte",
+    title:"Schnittpunkte",
+    info:"Schnittpunkte zweier Funktionen bestimmen und dafür eine passende Gleichung aufstellen."
+  },
+  {
+    id:"anwendung",
+    title:"Anwendungsaufgaben",
+    info:"Erkennen, welcher bekannte Aufgabentyp in einer Sachaufgabe steckt, einen passenden Ansatz wählen und das Ergebnis im Sachzusammenhang deuten."
+  }
+];
+
+let currentUser = null;
+let myResponse = null;
+let dashboardTimer = null;
+let lastDashboardUpdate = null;
+let previousResponses = null;
+let previousQuestions = null;
+let latestResponses = [];
+let latestQuestions = [];
+
+const studentView = document.getElementById("studentView");
+const dashboardView = document.getElementById("dashboardView");
+studentView.style.display = view === "student" ? "block" : "none";
+dashboardView.style.display = view === "dashboard" ? "block" : "none";
+
+function fmtDate(ts){
+  const d = new Date(ts);
+  return d.toLocaleString("de-DE",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
+}
+function timeAgo(ts){
+  const t = new Date(ts).getTime();
+  const sec = Math.max(0, Math.floor((Date.now()-t)/1000));
+  if(sec < 60) return "gerade eben";
+  const min = Math.floor(sec/60);
+  if(min < 60) return "vor "+min+" Min.";
+  const h = Math.floor(min/60);
+  if(h < 24) return "vor "+h+" Std.";
+  const days = Math.floor(h/24);
+  return "vor "+days+" Tag"+(days===1?"":"en");
+}
+function avg(values){
+  const nums = values.filter(v => Number.isFinite(v));
+  return nums.length ? nums.reduce((a,b)=>a+b,0)/nums.length : null;
+}
+function counts(values){
+  return [1,2,3,4,5].map(n => values.filter(v=>v===n).length);
+}
+function ratingHTML(name,current){
+  return [1,2,3,4,5].map(n=>`
+    <input type="radio" id="${name}_${n}" name="${name}" value="${n}" ${current===n?"checked":""}>
+    <label for="${name}_${n}" title="${n===1?"sehr unsicher":n===5?"sehr sicher":n}">${n}</label>
+  `).join("");
+}
+function getSelected(name){
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? Number(el.value) : null;
+}
+function setBusy(button, busy, busyText){
+  if(!button) return;
+  if(busy){
+    button.dataset.oldText = button.textContent;
+    button.textContent = busyText || "Bitte warten …";
+    button.disabled = true;
+  } else {
+    button.textContent = button.dataset.oldText || button.textContent;
+    button.disabled = false;
+  }
+}
+function showConnectionError(message){
+  const main = view === "student" ? studentView : dashboardView;
+  let box = main.querySelector(".connection-error");
+  if(!box){
+    box = document.createElement("div");
+    box.className = "connection-error";
+    main.prepend(box);
+  }
+  box.textContent = message;
+}
+
+async function getOrCreateStudentSession(){
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if(error) throw error;
+  if(session?.user){
+    currentUser = session.user;
+    return;
+  }
+  const { data, error: anonError } = await supabase.auth.signInAnonymously();
+  if(anonError) throw anonError;
+  currentUser = data.user;
+}
+
+async function loadMyResponse(){
+  if(!currentUser) return null;
+  const { data, error } = await supabase
+    .from("responses")
+    .select("*")
+    .eq("user_id", currentUser.id)
+    .maybeSingle();
+  if(error) throw error;
+  myResponse = data || null;
+  return myResponse;
+}
+
+function renderStudent(){
+  const mine = myResponse;
+  document.getElementById("overallRating").innerHTML = ratingHTML("overall", mine?.overall ?? null);
+  document.getElementById("overallCard").classList.remove("missing");
+
+  const wrap = document.getElementById("studentCompetencies");
+  wrap.innerHTML = "";
+  competencies.forEach(c=>{
+    const row = document.createElement("div");
+    row.className = "rating-row";
+    row.dataset.compId = c.id;
+    row.innerHTML = `
+      <div class="rating-title-wrap">
+        <div class="rating-title-line">
+          <div class="rating-title">${c.title}</div>
+          <button class="info-btn" type="button" aria-label="Erläuterung zu ${c.title}" data-info="${c.id}">i</button>
+        </div>
+        <div class="info-text" id="info_${c.id}">${c.info}</div>
+      </div>
+      <div class="rating" aria-label="${c.title}">${ratingHTML("comp_"+c.id, mine?.[c.id] ?? null)}</div>
+    `;
+    wrap.appendChild(row);
+  });
+
+  document.querySelectorAll(".info-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const target = document.getElementById("info_"+btn.dataset.info);
+      const willOpen = !target.classList.contains("open");
+      document.querySelectorAll(".info-text.open").forEach(el=>el.classList.remove("open"));
+      if(willOpen) target.classList.add("open");
+    });
+  });
+
+  document.querySelectorAll('input[type="radio"]').forEach(input=>{
+    input.addEventListener("change",()=>{
+      document.getElementById("overallCard").classList.remove("missing");
+      const row = input.closest(".rating-row");
+      if(row) row.classList.remove("missing");
+      if(mine) document.getElementById("unsavedNotice").classList.add("show");
+    });
+  });
+
+  const panel = document.getElementById("lastFeedbackPanel");
+  if(mine){
+    panel.style.display = "block";
+    document.getElementById("lastFeedbackText").textContent =
+      "Zuletzt gespeichert am "+fmtDate(mine.updated_at)+". Du kannst die Werte oben jederzeit ändern und erneut speichern.";
+  } else {
+    panel.style.display = "none";
+    document.getElementById("unsavedNotice").classList.remove("show");
+  }
+}
+
+async function saveRatings(){
+  const overall = getSelected("overall");
+  const ratings = {};
+  const missing = [];
+  document.getElementById("overallCard").classList.remove("missing");
+  document.querySelectorAll(".rating-row.missing").forEach(el=>el.classList.remove("missing"));
+
+  if(!Number.isFinite(overall)){
+    const overallCard = document.getElementById("overallCard");
+    overallCard.classList.add("missing");
+    missing.push(overallCard);
+  }
+  competencies.forEach(c=>{
+    ratings[c.id] = getSelected("comp_"+c.id);
+    if(!Number.isFinite(ratings[c.id])){
+      const row = document.querySelector(`.rating-row[data-comp-id="${c.id}"]`);
+      if(row){ row.classList.add("missing"); missing.push(row); }
+    }
+  });
+  if(missing.length){
+    missing[0].scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+
+  const btn = document.getElementById("saveRatings");
+  setBusy(btn,true,"Speichere …");
+  try{
+    const payload = {
+      user_id: currentUser.id,
+      overall,
+      ...ratings,
+      updated_at: new Date().toISOString()
+    };
+    const { error } = await supabase
+      .from("responses")
+      .upsert(payload, { onConflict:"user_id" });
+    if(error) throw error;
+    await loadMyResponse();
+    renderStudent();
+    document.getElementById("unsavedNotice").classList.remove("show");
+    const msg = document.getElementById("ratingSaved");
+    msg.classList.add("show");
+    setTimeout(()=>msg.classList.remove("show"),3000);
+  } catch(err){
+    console.error(err);
+    alert("Die Einschätzung konnte nicht gespeichert werden. Bitte versuche es noch einmal.");
+  } finally {
+    setBusy(btn,false);
+  }
+}
+
+async function sendQuestion(){
+  const input = document.getElementById("questionInput");
+  const text = input.value.trim();
+  if(!text){
+    alert("Bitte gib zuerst eine Frage ein.");
+    return;
+  }
+  const btn = document.getElementById("sendQuestion");
+  setBusy(btn,true,"Sende …");
+  try{
+    const { error } = await supabase
+      .from("questions")
+      .insert({ user_id: currentUser.id, text });
+    if(error) throw error;
+    input.value = "";
+    document.getElementById("charCount").textContent = "0 / 350";
+    const msg = document.getElementById("questionSaved");
+    msg.classList.add("show");
+    setTimeout(()=>msg.classList.remove("show"),2500);
+  } catch(err){
+    console.error(err);
+    alert("Die Frage konnte nicht gespeichert werden. Bitte versuche es noch einmal.");
+  } finally {
+    setBusy(btn,false);
+  }
+}
+
+function questionNode(q,mode){
+  const el = document.createElement("div");
+  el.className = "question"+(q.completed?" completed":"");
+  const checkbox = mode==="hidden" ? "" :
+    `<input class="qcheck" type="checkbox" ${q.completed?"checked":""} aria-label="Frage als erledigt markieren">`;
+  const action = mode==="hidden"
+    ? `<button class="icon-btn restore" title="Wiederherstellen" aria-label="Wiederherstellen">↩</button>`
+    : `<button class="icon-btn hide" title="Frage ausblenden (nicht löschen)" aria-label="Frage ausblenden">⊘</button>`;
+  const isNew = (Date.now()-new Date(q.created_at).getTime()) < 10*60*1000 && !q.completed && !q.hidden;
+  el.innerHTML = `
+    ${checkbox || "<span></span>"}
+    <div class="qtext"></div>
+    <span class="q-badge ${isNew?"":"spacer"}">${isNew?"neu":"–"}</span>
+    <div class="qmeta">${timeAgo(q.created_at)}</div>
+    ${action}
+  `;
+  el.querySelector(".qtext").textContent = q.text;
+
+  if(mode!=="hidden"){
+    const check = el.querySelector(".qcheck");
+    check.addEventListener("change", async ()=>{
+      const old = q.completed;
+      q.completed = check.checked;
+      el.classList.toggle("completed",q.completed);
+      try{
+        const { error } = await supabase.from("questions").update({completed:q.completed}).eq("id",q.id);
+        if(error) throw error;
+        await loadDashboardData();
+      } catch(err){
+        console.error(err);
+        q.completed = old;
+        check.checked = old;
+        alert("Die Frage konnte nicht aktualisiert werden.");
+      }
+    });
+    el.querySelector(".hide").addEventListener("click", async ()=>{
+      try{
+        const { error } = await supabase.from("questions").update({hidden:true}).eq("id",q.id);
+        if(error) throw error;
+        await loadDashboardData();
+      } catch(err){
+        console.error(err);
+        alert("Die Frage konnte nicht ausgeblendet werden.");
+      }
+    });
+  } else {
+    el.querySelector(".restore").addEventListener("click", async ()=>{
+      try{
+        const { error } = await supabase.from("questions").update({hidden:false}).eq("id",q.id);
+        if(error) throw error;
+        await loadDashboardData();
+      } catch(err){
+        console.error(err);
+        alert("Die Frage konnte nicht wiederhergestellt werden.");
+      }
+    });
+  }
+  return el;
+}
+
+
+function showToast(icon,title,detail=""){
+  const container = document.getElementById("toastContainer");
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `
+    <div class="toast-icon">${icon}</div>
+    <div class="toast-copy">
+      <strong></strong>
+      <span></span>
+    </div>
+  `;
+  toast.querySelector("strong").textContent = title;
+  toast.querySelector("span").textContent = detail;
+  if(!detail) toast.querySelector("span").style.display = "none";
+  container.appendChild(toast);
+  setTimeout(()=>{
+    toast.classList.add("out");
+    setTimeout(()=>toast.remove(),220);
+  },3600);
+}
+
+function responseSignature(r){
+  return [
+    r.overall,
+    r.zuordnen,
+    r.punkte,
+    r.gleichung,
+    r.scheitel,
+    r.nullstellen,
+    r.schnittpunkte,
+    r.anwendung
+  ].join("|");
+}
+
+function notifyDashboardChanges(responses,questions){
+  // Erster erfolgreicher Ladevorgang: nur Ausgangszustand merken, keine Meldungen.
+  if(previousResponses === null || previousQuestions === null){
+    previousResponses = new Map(responses.map(r=>[r.user_id,responseSignature(r)]));
+    previousQuestions = new Set(questions.map(q=>q.id));
+    return;
+  }
+
+  const currentResponseMap = new Map(responses.map(r=>[r.user_id,responseSignature(r)]));
+  const currentQuestionSet = new Set(questions.map(q=>q.id));
+
+  let newResponses = 0;
+  let changedResponses = 0;
+  for(const [userId,signature] of currentResponseMap){
+    if(!previousResponses.has(userId)){
+      newResponses++;
+    }else if(previousResponses.get(userId) !== signature){
+      changedResponses++;
+    }
+  }
+
+  let newQuestions = 0;
+  for(const id of currentQuestionSet){
+    if(!previousQuestions.has(id)) newQuestions++;
+  }
+
+  if(newQuestions){
+    showToast(
+      "💬",
+      newQuestions === 1 ? "Neue Frage eingegangen" : `${newQuestions} neue Fragen eingegangen`,
+      "Die Fragenliste wurde aktualisiert."
+    );
+  }
+  if(newResponses){
+    showToast(
+      "👤",
+      newResponses === 1 ? "Neue Rückmeldung" : `${newResponses} neue Rückmeldungen`,
+      "Die Kompetenzübersicht wurde aktualisiert."
+    );
+  }
+  if(changedResponses){
+    showToast(
+      "↻",
+      changedResponses === 1 ? "Einschätzung aktualisiert" : `${changedResponses} Einschätzungen aktualisiert`,
+      "Mindestens ein Bewertungswert wurde geändert."
+    );
+  }
+
+  previousResponses = currentResponseMap;
+  previousQuestions = currentQuestionSet;
+}
+
+function renderDashboard(responses,questions){
+  const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
+  const overallAvg = avg(overallVals);
+  document.getElementById("overallAverage").textContent =
+    overallAvg===null ? "–" : overallAvg.toFixed(1).replace(".",",");
+
+  const open = questions.filter(q=>!q.hidden && !q.completed)
+    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  const done = questions.filter(q=>!q.hidden && q.completed)
+    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  const hidden = questions.filter(q=>q.hidden)
+    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+
+  document.getElementById("doneSummaryCount").textContent = done.length;
+  document.getElementById("hiddenSummaryCount").textContent = hidden.length;
+
+  const chips = document.getElementById("dashChips");
+  chips.style.display = "flex";
+  const updatedText = lastDashboardUpdate
+    ? "↻ "+lastDashboardUpdate.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit",second:"2-digit"})
+    : "↻ lädt …";
+  chips.innerHTML = `
+    <span class="status-chip">👥 ${responses.length} Rückmeldungen</span>
+    <span class="status-chip">□ ${open.length} offen</span>
+    <span class="status-chip">✓ ${done.length} erledigt</span>
+    <span class="status-chip dashboard-updated">${updatedText}</span>
+  `;
+
+  const starWrap = document.getElementById("overallStars");
+  starWrap.innerHTML = "";
+  const roundedStars = overallAvg===null ? 0 : Math.round(overallAvg);
+  for(let i=1;i<=5;i++){
+    const s = document.createElement("span");
+    s.textContent = "★";
+    if(i<=roundedStars) s.className = "filled";
+    starWrap.appendChild(s);
+  }
+  document.getElementById("overallScoreNote").textContent =
+    responses.length ? `Durchschnitt aus ${responses.length} Rückmeldungen` : "Noch keine Rückmeldungen";
+  document.getElementById("openQuestionsLabel").textContent =
+    `${open.length} offene Frage${open.length===1?"":"n"} · neueste zuerst`;
+
+  const compWrap = document.getElementById("dashboardCompetencies");
+  compWrap.innerHTML = "";
+  competencies.forEach(c=>{
+    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    const a = avg(vals);
+    const distCounts = counts(vals);
+    const percent = a===null ? 0 : Math.max(0,Math.min(100,(a/5)*100));
+    const card = document.createElement("div");
+    card.className = "comp-card";
+    card.innerHTML = `
+      <div class="comp-top">
+        <div class="comp-name">${c.title}</div>
+        <div class="avg-bar" aria-label="Durchschnitt ${a===null?"noch nicht vorhanden":a.toFixed(1)+" von 5"}">
+          <span style="width:${percent}%"></span>
+        </div>
+        <div class="avg">${a===null?"–":a.toFixed(1).replace(".",",")} / 5</div>
+        <div class="dist-inline" aria-label="Verteilung der Bewertungen">
+          ${distCounts.map((count,i)=>`<span class="dist-mini"><small>${i+1}</small><b>${count}</b></span>`).join("")}
+        </div>
+      </div>
+    `;
+    compWrap.appendChild(card);
+  });
+
+  function fillList(id,arr,mode){
+    const wrap = document.getElementById(id);
+    wrap.innerHTML = "";
+    if(!arr.length){
+      const e = document.createElement("div");
+      e.className = "empty";
+      e.textContent = mode==="open" ? "Noch keine offenen Fragen." : "Keine Einträge.";
+      wrap.appendChild(e);
+      return;
+    }
+    arr.forEach(q=>wrap.appendChild(questionNode(q,mode)));
+  }
+  fillList("openQuestions",open,"open");
+  fillList("doneQuestions",done,"done");
+  fillList("hiddenQuestions",hidden,"hidden");
+}
+
+async function loadDashboardData(){
+  try{
+    const [respResult, qResult] = await Promise.all([
+      supabase.from("responses").select("*"),
+      supabase.from("questions").select("*").order("created_at",{ascending:false})
+    ]);
+    if(respResult.error) throw respResult.error;
+    if(qResult.error) throw qResult.error;
+    lastDashboardUpdate = new Date();
+    const responses = respResult.data || [];
+    const questions = qResult.data || [];
+    latestResponses = responses;
+    latestQuestions = questions;
+    notifyDashboardChanges(responses,questions);
+    renderDashboard(responses,questions);
+  } catch(err){
+    console.error(err);
+    showConnectionError("Das Dashboard konnte die Daten nicht laden. Prüfe die Verbindung und melde dich ggf. erneut an.");
+  }
+}
+
+
+
+function csvCell(value){
+  const s = String(value ?? "");
+  return '"' + s.replaceAll('"','""') + '"';
+}
+
+function buildReport(){
+  const responses = latestResponses || [];
+  const questions = latestQuestions || [];
+  const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
+  const overallAvg = avg(overallVals);
+  const overallCounts = counts(overallVals);
+  const open = questions.filter(q=>!q.hidden && !q.completed);
+  const done = questions.filter(q=>!q.hidden && q.completed);
+  const hidden = questions.filter(q=>q.hidden);
+
+  document.getElementById("reportMeta").textContent =
+    "10d · Quadratische Funktionen und Gleichungen · " +
+    new Date().toLocaleString("de-DE",{dateStyle:"medium",timeStyle:"short"});
+
+  const competenceRows = competencies.map(c=>{
+    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    const a = avg(vals);
+    const cs = counts(vals);
+    return `
+      <tr>
+        <td>${c.title}</td>
+        <td class="num">${a===null?"–":a.toFixed(2).replace(".",",")}</td>
+        ${cs.map(n=>`<td class="num">${n}</td>`).join("")}
+      </tr>`;
+  }).join("");
+
+  const questionRows = [...questions]
+    .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at))
+    .map(q=>{
+      const status = q.hidden ? "ausgeblendet" : q.completed ? "erledigt" : "offen";
+      const safeText = document.createElement("div");
+      safeText.textContent = q.text;
+      return `
+        <div class="report-question">
+          <span class="report-question-status">${status}</span>
+          ${safeText.innerHTML}
+        </div>`;
+    }).join("");
+
+  document.getElementById("reportBody").innerHTML = `
+    <div class="report-summary">
+      <div class="report-stat"><b>${responses.length}</b><span>Rückmeldungen</span></div>
+      <div class="report-stat"><b>${overallAvg===null?"–":overallAvg.toFixed(2).replace(".",",")}</b><span>Gesamtgefühl Ø / 5</span></div>
+      <div class="report-stat"><b>${questions.length}</b><span>Fragen insgesamt</span></div>
+      <div class="report-stat"><b>${open.length} / ${done.length}</b><span>offen / erledigt</span></div>
+    </div>
+
+    <section class="report-section">
+      <h3>Gesamtgefühl – Verteilung</h3>
+      <table class="report-table">
+        <thead><tr><th>Bewertung</th>${[1,2,3,4,5].map(n=>`<th class="num">${n}</th>`).join("")}</tr></thead>
+        <tbody><tr><td>Anzahl</td>${overallCounts.map(n=>`<td class="num">${n}</td>`).join("")}</tr></tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>Kompetenzen</h3>
+      <table class="report-table">
+        <thead>
+          <tr><th>Kompetenz</th><th class="num">Ø</th>${[1,2,3,4,5].map(n=>`<th class="num">${n}</th>`).join("")}</tr>
+        </thead>
+        <tbody>${competenceRows}</tbody>
+      </table>
+    </section>
+
+    <section class="report-section">
+      <h3>Fragen (${questions.length})</h3>
+      ${questionRows || '<div class="empty">Keine Fragen eingegangen.</div>'}
+      ${hidden.length ? `<div class="qmeta" style="margin-top:8px">${hidden.length} Frage(n) wurden ausgeblendet.</div>` : ""}
+    </section>
+  `;
+}
+
+async function openReport(){
+  await loadDashboardData();
+  buildReport();
+  const modal = document.getElementById("reportModal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+}
+
+function closeReport(){
+  const modal = document.getElementById("reportModal");
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden","true");
+}
+
+function exportReportCsv(){
+  const responses = latestResponses || [];
+  const questions = latestQuestions || [];
+  const lines = [];
+  lines.push(["Klausurcheck 10d","Quadratische Funktionen und Gleichungen","Version "+APP_VERSION].map(csvCell).join(";"));
+  lines.push(["Export",new Date().toLocaleString("de-DE")].map(csvCell).join(";"));
+  lines.push([]);
+  const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
+  lines.push(["Rückmeldungen",responses.length].map(csvCell).join(";"));
+  lines.push(["Gesamtgefühl Durchschnitt",avg(overallVals)?.toFixed(2) ?? ""].map(csvCell).join(";"));
+  lines.push(["Gesamtgefühl","1","2","3","4","5"].map(csvCell).join(";"));
+  lines.push(["Anzahl",...counts(overallVals)].map(csvCell).join(";"));
+  lines.push([]);
+  lines.push(["Kompetenz","Durchschnitt","1","2","3","4","5"].map(csvCell).join(";"));
+  competencies.forEach(c=>{
+    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    lines.push([c.title, avg(vals)?.toFixed(2) ?? "", ...counts(vals)].map(csvCell).join(";"));
+  });
+  lines.push([]);
+  lines.push(["Fragen","Status","Zeitpunkt"].map(csvCell).join(";"));
+  [...questions].sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).forEach(q=>{
+    const status = q.hidden ? "ausgeblendet" : q.completed ? "erledigt" : "offen";
+    lines.push([q.text,status,new Date(q.created_at).toLocaleString("de-DE")].map(csvCell).join(";"));
+  });
+
+  const blob = new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "klausurcheck-10d-auswertung.csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function showPasswordRecovery(message=""){
+  studentView.style.display = "none";
+  dashboardView.style.display = "block";
+  document.getElementById("passwordRecoveryPanel").style.display = "block";
+  document.getElementById("teacherLoginPanel").style.display = "none";
+  document.getElementById("dashboardContent").style.display = "none";
+  document.getElementById("reportBtn").style.display = "none";
+  document.getElementById("resetAllBtn").style.display = "none";
+  document.getElementById("changePasswordBtn").style.display = "none";
+  document.getElementById("logoutBtn").style.display = "none";
+  document.getElementById("dashChips").style.display = "none";
+  const box = document.getElementById("passwordRecoveryError");
+  if(message){
+    box.textContent = message;
+    box.classList.add("show");
+  } else {
+    box.classList.remove("show");
+  }
+}
+
+async function requestPasswordRecovery(){
+  const email = document.getElementById("teacherEmail").value.trim();
+  const errorBox = document.getElementById("teacherLoginError");
+  errorBox.classList.remove("show");
+  if(!email){
+    errorBox.textContent = "Bitte zuerst deine Lehrer-E-Mail-Adresse eingeben.";
+    errorBox.classList.add("show");
+    return;
+  }
+  const btn = document.getElementById("forgotPasswordBtn");
+  setBusy(btn,true,"E-Mail wird gesendet …");
+  try{
+    const redirectTo = location.origin + location.pathname + "?view=dashboard";
+    const { error } = await supabase.auth.resetPasswordForEmail(email,{ redirectTo });
+    if(error) throw error;
+    errorBox.textContent = "E-Mail wurde gesendet. Öffne den Wiederherstellungslink und kehre danach zu dieser Seite zurück.";
+    errorBox.classList.add("show");
+  } catch(err){
+    console.error(err);
+    errorBox.textContent = "Die Wiederherstellungs-E-Mail konnte nicht gesendet werden.";
+    errorBox.classList.add("show");
+  } finally{
+    setBusy(btn,false);
+  }
+}
+
+async function setRecoveredPassword(){
+  const p1 = document.getElementById("newTeacherPassword").value;
+  const p2 = document.getElementById("newTeacherPassword2").value;
+  const box = document.getElementById("passwordRecoveryError");
+  box.classList.remove("show");
+  if(p1.length < 8){
+    box.textContent = "Bitte ein Passwort mit mindestens 8 Zeichen wählen.";
+    box.classList.add("show");
+    return;
+  }
+  if(p1 !== p2){
+    box.textContent = "Die beiden Passwörter stimmen nicht überein.";
+    box.classList.add("show");
+    return;
+  }
+  const btn = document.getElementById("setTeacherPasswordBtn");
+  setBusy(btn,true,"Speichere …");
+  try{
+    const { error } = await supabase.auth.updateUser({ password:p1 });
+    if(error) throw error;
+    // Nach erfolgreichem Setzen ist der Benutzer eingeloggt.
+    currentUser = (await supabase.auth.getUser()).data.user;
+    history.replaceState({}, "", location.origin + location.pathname + "?view=dashboard");
+    dashboardView.style.display = "block";
+    studentView.style.display = "none";
+    await showDashboard();
+  } catch(err){
+    console.error(err);
+    box.textContent = "Das Passwort konnte nicht gespeichert werden. Bitte fordere einen neuen Wiederherstellungslink an.";
+    box.classList.add("show");
+  } finally{
+    setBusy(btn,false);
+  }
+}
+
+function showTeacherLogin(message=""){
+  document.getElementById("passwordRecoveryPanel").style.display = "none";
+  document.getElementById("teacherLoginPanel").style.display = "block";
+  document.getElementById("dashboardContent").style.display = "none";
+  document.getElementById("reportBtn").style.display = "none";
+  document.getElementById("resetAllBtn").style.display = "none";
+  document.getElementById("changePasswordBtn").style.display = "none";
+  document.getElementById("logoutBtn").style.display = "none";
+  document.getElementById("dashChips").style.display = "none";
+  const errorBox = document.getElementById("teacherLoginError");
+  if(message){
+    errorBox.textContent = message;
+    errorBox.classList.add("show");
+  } else {
+    errorBox.classList.remove("show");
+  }
+}
+
+async function showDashboard(){
+  document.getElementById("passwordRecoveryPanel").style.display = "none";
+  document.getElementById("teacherLoginPanel").style.display = "none";
+  document.getElementById("dashboardContent").style.display = "block";
+  document.getElementById("reportBtn").style.display = "inline-block";
+  document.getElementById("resetAllBtn").style.display = "inline-block";
+  document.getElementById("changePasswordBtn").style.display = "inline-block";
+  document.getElementById("logoutBtn").style.display = "inline-block";
+  previousResponses = null;
+  previousQuestions = null;
+  await loadDashboardData();
+  clearInterval(dashboardTimer);
+  dashboardTimer = setInterval(loadDashboardData,5000);
+}
+
+async function teacherLogin(){
+  const email = document.getElementById("teacherEmail").value.trim();
+  const password = document.getElementById("teacherPassword").value;
+  const btn = document.getElementById("teacherLoginBtn");
+  const errorBox = document.getElementById("teacherLoginError");
+  errorBox.classList.remove("show");
+  if(!email || !password){
+    errorBox.textContent = "Bitte E-Mail und Passwort eingeben.";
+    errorBox.classList.add("show");
+    return;
+  }
+  setBusy(btn,true,"Anmelden …");
+  try{
+    const { data, error } = await supabase.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    currentUser = data.user;
+    await showDashboard();
+  } catch(err){
+    console.error(err);
+    showTeacherLogin("Anmeldung nicht möglich. Bitte E-Mail und Passwort prüfen.");
+  } finally {
+    setBusy(btn,false);
+  }
+}
+
+async function initStudent(){
+  try{
+    await getOrCreateStudentSession();
+    await loadMyResponse();
+    renderStudent();
+  } catch(err){
+    console.error(err);
+    showConnectionError("Die anonyme Verbindung konnte nicht hergestellt werden. Bitte Seite neu laden oder die Lehrkraft informieren.");
+  }
+}
+
+async function initDashboard(){
+  try{
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if(error) throw error;
+    if(session?.user && !session.user.is_anonymous){
+      currentUser = session.user;
+      await showDashboard();
+    } else {
+      showTeacherLogin();
+    }
+  } catch(err){
+    console.error(err);
+    showTeacherLogin("Der Login-Status konnte nicht geladen werden.");
+  }
+}
+
+document.getElementById("saveRatings").addEventListener("click",saveRatings);
+document.getElementById("sendQuestion").addEventListener("click",sendQuestion);
+
+const qInput = document.getElementById("questionInput");
+qInput.addEventListener("input",()=>{
+  document.getElementById("charCount").textContent = qInput.value.length+" / 350";
+});
+document.getElementById("editAgain").addEventListener("click",()=>{
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+
+supabase.auth.onAuthStateChange((event, session)=>{
+  if(event==="PASSWORD_RECOVERY"){
+    currentUser = session?.user || null;
+    showPasswordRecovery();
+  }
+});
+
+document.getElementById("teacherLoginBtn").addEventListener("click",teacherLogin);
+
+
+async function resetAllData(){
+  const first = confirm(
+    "Wirklich alle Rückmeldungen und alle Fragen zurücksetzen?\n\n" +
+    "Die Daten werden aus der Datenbank gelöscht und können nicht wiederhergestellt werden."
+  );
+  if(!first) return;
+
+  const second = confirm(
+    "Letzte Bestätigung:\n\nAlle Rückmeldungen und Fragen der 10d jetzt endgültig löschen?"
+  );
+  if(!second) return;
+
+  const btn = document.getElementById("resetAllBtn");
+  setBusy(btn,true,"Setze zurück …");
+  try{
+    // Die Null-UUID ist kein gültiger Datensatz bei uns; neq() trifft daher alle Zeilen.
+    const zeroUuid = "00000000-0000-0000-0000-000000000000";
+    const qResult = await supabase.from("questions").delete().neq("id",zeroUuid);
+    if(qResult.error) throw qResult.error;
+
+    const rResult = await supabase.from("responses").delete().neq("id",zeroUuid);
+    if(rResult.error) throw rResult.error;
+
+    previousResponses = new Map();
+    previousQuestions = new Set();
+    await loadDashboardData();
+    showToast("✓","Alles zurückgesetzt","Rückmeldungen und Fragen wurden gelöscht.");
+  } catch(err){
+    console.error(err);
+    alert(
+      "Zurücksetzen war nicht möglich. Wahrscheinlich fehlen noch die Löschrechte in Supabase."
+    );
+  } finally{
+    setBusy(btn,false);
+  }
+}
+
+
+document.getElementById("reportBtn").addEventListener("click",openReport);
+document.getElementById("reportCloseBtn").addEventListener("click",closeReport);
+document.querySelector("[data-report-close]").addEventListener("click",closeReport);
+document.getElementById("reportCsvBtn").addEventListener("click",exportReportCsv);
+document.getElementById("reportPrintBtn").addEventListener("click",()=>{
+  document.body.classList.add("report-printing");
+  // Safari kann window.print() asynchron behandeln. Deshalb die Druckklasse
+  // NICHT per kurzem Timeout entfernen, sondern erst nach dem Druckdialog.
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>window.print());
+  });
+});
+window.addEventListener("afterprint",()=>{
+  document.body.classList.remove("report-printing");
+});
+document.getElementById("resetAllBtn").addEventListener("click",resetAllData);
+document.getElementById("changePasswordBtn").addEventListener("click",()=>{
+  showPasswordRecovery();
+});
+document.getElementById("forgotPasswordBtn").addEventListener("click",requestPasswordRecovery);
+document.getElementById("setTeacherPasswordBtn").addEventListener("click",setRecoveredPassword);
+document.getElementById("newTeacherPassword2").addEventListener("keydown",e=>{
+  if(e.key==="Enter") setRecoveredPassword();
+});
+document.getElementById("teacherPassword").addEventListener("keydown",e=>{
+  if(e.key==="Enter") teacherLogin();
+});
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+  clearInterval(dashboardTimer);
+  await supabase.auth.signOut();
+  currentUser = null;
+  previousResponses = null;
+  previousQuestions = null;
+  showTeacherLogin();
+});
+
+setTimeout(async()=>{
+  if(document.getElementById("passwordRecoveryPanel").style.display==="block") return;
+  if(view==="student"){
+    await initStudent();
+  } else {
+    await initDashboard();
+  }
+},350);
+</script>
+</body>
+</html>
