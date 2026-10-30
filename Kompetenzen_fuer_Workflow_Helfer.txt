@@ -1,0 +1,7 @@
+Sachprobleme verstehen :: Gegebene und gesuchte Größen erkennen, wesentliche Angaben markieren und die Situation mit einer Skizze oder Tabelle ordnen.
+Variablen und Bedingungen festlegen :: Eine sinnvolle Variable mit Einheit wählen, weitere Größen durch sie ausdrücken und Einschränkungen des Sachzusammenhangs beachten.
+Funktionsgleichungen rekonstruieren :: Aus vorgegebenen Punkten, einem Scheitelpunkt oder anderen Eigenschaften die Gleichung einer quadratischen Funktion bestimmen – zum Beispiel bei einem Brückenbogen.
+Funktionsgleichungen aus Sachzusammenhängen entwickeln :: Aus Beziehungen zwischen Größen eine quadratische Funktion herleiten, etwa aus Zaunlängen und Flächeninhalten oder aus Eintrittspreis und Besucherzahl.
+Passende Lösungswege auswählen :: An der Fragestellung erkennen, ob ein Funktionswert, eine Nullstelle, ein Maximum oder ein Minimum benötigt wird.
+Mathematische Berechnungen durchführen :: Funktionswerte berechnen, quadratische Gleichungen lösen und Scheitelpunkte beziehungsweise Extremwerte bestimmen.
+Ergebnisse interpretieren und überprüfen :: Ergebnisse mit Einheiten und einem Antwortsatz deuten, sinnvolle Wertebereiche beachten und die Plausibilität im Sachzusammenhang prüfen.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Klausurcheck 10d – Quadratische Funktionen</title>
+  <title>Kompetenzcheck 10d – Modellieren und Problemlösen</title>
   <style>
     :root{
       --bg:#f6f7f8;
@@ -762,178 +762,217 @@
       .report-actions{justify-content:flex-start}
     }
     @media print{
-      @page{
-        size:A4 portrait;
-        margin:14mm 12mm;
-      }
+      @page{size:A4 portrait;margin:14mm 12mm}
+      html,body{background:#fff!important;width:auto!important;min-width:0!important}
+      body.report-printing{margin:0!important;color:#111!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      body.report-printing .app > :not(.report-modal){display:none!important}
+      body.report-printing .report-modal{display:block!important;position:static!important;inset:auto!important;width:auto!important;height:auto!important;overflow:visible!important}
+      body.report-printing .report-backdrop,body.report-printing .report-toolbar .report-actions{display:none!important}
+      body.report-printing .report-sheet{display:block!important;width:auto!important;max-width:none!important;max-height:none!important;overflow:visible!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+      body.report-printing .report-toolbar{position:static!important;display:block!important;padding:0 0 7mm!important;margin:0 0 6mm!important;border-bottom:1px solid #cfd4da!important;background:#fff!important;backdrop-filter:none!important}
+      body.report-printing .report-toolbar h2{margin:0 0 1.5mm!important;font-size:20pt!important}
+      body.report-printing .report-meta{font-size:9.5pt!important;color:#555!important}
+      body.report-printing .report-body{padding:0!important}
+      body.report-printing .report-summary{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:3mm!important;margin:0 0 7mm!important}
+      body.report-printing .report-stat{padding:4mm!important;border:1px solid #d7dbe0!important;border-radius:3mm!important;background:#fafafa!important;break-inside:avoid}
+      body.report-printing .report-stat b{font-size:16pt!important}
+      body.report-printing .report-stat span{font-size:8pt!important}
+      body.report-printing .report-section{margin-top:7mm!important;break-inside:auto}
+      body.report-printing .report-section h3{margin:0 0 3mm!important;font-size:12pt!important;break-after:avoid}
+      body.report-printing .report-table{width:100%!important;table-layout:fixed!important;border-collapse:collapse!important;font-size:8.5pt!important}
+      body.report-printing .report-table th,body.report-printing .report-table td{padding:2.2mm 2mm!important;border-bottom:1px solid #e0e3e7!important;line-height:1.25!important;overflow-wrap:anywhere}
+      body.report-printing .report-table th:first-child,body.report-printing .report-table td:first-child{width:46%!important}
+      body.report-printing .report-table th:not(:first-child),body.report-printing .report-table td:not(:first-child){width:9%!important}
+      body.report-printing .report-table thead{display:table-header-group}
+      body.report-printing .report-table tr{break-inside:avoid}
+      body.report-printing .report-question{padding:2.5mm 0!important;break-inside:avoid;font-size:9pt!important}
+      body.report-printing .report-question-status{font-size:7.5pt!important}
+      body.report-printing .report-footer{margin-top:8mm!important;padding:4mm 0 0!important;border-top:1px solid #e0e3e7;font-size:8pt!important}
+    }
 
-      html,body{
-        background:#fff!important;
-        width:auto!important;
-        min-width:0!important;
-      }
 
-      body.report-printing{
-        margin:0!important;
-        color:#111!important;
-        -webkit-print-color-adjust:exact;
-        print-color-adjust:exact;
-      }
 
-      /* Beim Drucken darf wirklich nur die Auswertung existieren.
-         So kann das Dashboard nicht hinter dem Modal "durchscheinen". */
-      body.report-printing .app > :not(.report-modal){
-        display:none!important;
-      }
+    .history-details{
+      padding:0;
+      overflow:hidden;
+    }
+    .history-details > summary{
+      list-style:none;
+    }
+    .history-details > summary::-webkit-details-marker{
+      display:none;
+    }
+    .history-summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:15px 18px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .history-summary:hover{
+      background:#fafbfc;
+    }
+    .history-summary-main{
+      min-width:0;
+    }
+    .history-summary-title{
+      display:block;
+      font-weight:800;
+      font-size:1rem;
+    }
+    .history-summary-meta{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:.82rem;
+      font-weight:500;
+    }
+    .history-summary-arrow{
+      color:var(--muted);
+      font-size:1rem;
+      transition:transform .16s ease;
+    }
+    .history-details[open] .history-summary-arrow{
+      transform:rotate(90deg);
+    }
+    .history-inner{
+      padding:0 18px 18px;
+      border-top:1px solid var(--soft);
+    }
+    .history-inner .history-actions{
+      padding-top:13px;
+      justify-content:flex-start;
+    }
 
-      body.report-printing .report-modal{
-        display:block!important;
-        position:static!important;
-        inset:auto!important;
-        width:auto!important;
-        height:auto!important;
-        overflow:visible!important;
-      }
+    .history-head{align-items:flex-start}
+    .history-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .history-select{border:1px solid var(--line);border-radius:9px;padding:7px 9px;background:#fff;color:var(--text);max-width:270px}
+    .history-status{color:var(--muted);font-size:.84rem;margin:4px 0 10px}
+    .history-chart{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px;overflow-x:auto}
+    .history-chart svg{display:block;width:100%;min-width:620px;height:auto}
+    .history-empty{padding:28px 12px;text-align:center;color:var(--muted)}
+    .milestone-list{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .milestone-chip{display:inline-flex;gap:6px;align-items:center;padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:#fafbfc;font-size:.78rem}
+    .milestone-chip b{font-weight:750}
+    .history-manual-dot{font-weight:800;color:var(--accent)}
+    .report-history-chart{border:1px solid #d7dbe0;border-radius:3mm;padding:2.5mm;margin:0 0 4mm;break-inside:avoid}
+    .report-history-chart svg{display:block;width:100%;height:auto}
+    @media(max-width:700px){.history-actions{justify-content:flex-start}.history-select{max-width:100%}}
 
-      body.report-printing .report-backdrop,
-      body.report-printing .report-toolbar .report-actions{
-        display:none!important;
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  
+    .student-vote-area{
+      margin-top:18px;
+      padding-top:16px;
+      border-top:1px solid var(--soft);
+    }
+    .student-vote-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:10px;
+    }
+    .student-vote-head h3{margin:0 0 3px;font-size:1rem}
+    .student-vote-head .lead{margin:0}
+    .student-vote-note{
+      color:var(--muted);
+      font-size:.78rem;
+      white-space:nowrap;
+      padding-top:2px;
+    }
+    .student-vote-list{display:grid;gap:8px}
+    .student-vote-item{
+      display:grid;
+      grid-template-columns:56px minmax(0,1fr);
+      gap:10px;
+      align-items:start;
+      padding:10px 11px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+    }
+    .vote-btn{
+      min-width:50px;
+      border:1px solid var(--line);
+      border-radius:9px;
+      padding:7px 6px;
+      background:#fff;
+      color:var(--text);
+      font-weight:800;
+      font-variant-numeric:tabular-nums;
+    }
+    .vote-btn:hover:not(:disabled){background:var(--accent-soft);border-color:#c9ddd4}
+    .vote-btn.selected{
+      background:var(--accent-soft);
+      border-color:#bcd7ca;
+      color:#245540;
+    }
+    .vote-btn:disabled{
+      cursor:default;
+      opacity:.62;
+    }
+    .student-vote-text{
+      font-size:.94rem;
+      line-height:1.35;
+      overflow-wrap:anywhere;
+    }
+    .student-vote-meta{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:.76rem;
+    }
+    .vote-count-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:42px;
+      padding:4px 7px;
+      border-radius:999px;
+      background:#f0f3f5;
+      color:#4f5963;
+      font-size:.76rem;
+      font-weight:800;
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;
+    }
+    .question.has-votes{
+      grid-template-columns:30px minmax(0,1fr) auto auto 78px 36px;
+    }
+    @media (max-width:980px){
+      .question.has-votes{
+        grid-template-columns:28px minmax(0,1fr) auto auto 36px;
       }
-
-      body.report-printing .report-sheet{
-        display:block!important;
-        width:auto!important;
-        max-width:none!important;
-        max-height:none!important;
-        overflow:visible!important;
-        margin:0!important;
-        padding:0!important;
-        border:0!important;
-        border-radius:0!important;
-        box-shadow:none!important;
-        background:#fff!important;
+      .question.has-votes .qmeta{
+        grid-column:2;
       }
-
-      body.report-printing .report-toolbar{
-        position:static!important;
-        display:block!important;
-        padding:0 0 7mm!important;
-        margin:0 0 6mm!important;
-        border-bottom:1px solid #cfd4da!important;
-        background:#fff!important;
-        backdrop-filter:none!important;
+    }
+    @media (max-width:650px){
+      .student-vote-head{display:block}
+      .student-vote-note{margin-top:5px}
+      .student-vote-item{grid-template-columns:50px minmax(0,1fr)}
+      .question.has-votes{
+        grid-template-columns:28px minmax(0,1fr) auto 36px;
       }
-
-      body.report-printing .report-toolbar h2{
-        margin:0 0 1.5mm!important;
-        font-size:20pt!important;
-      }
-
-      body.report-printing .report-meta{
-        font-size:9.5pt!important;
-        color:#555!important;
-      }
-
-      body.report-printing .report-body{
-        padding:0!important;
-      }
-
-      body.report-printing .report-summary{
-        grid-template-columns:repeat(4,minmax(0,1fr))!important;
-        gap:3mm!important;
-        margin:0 0 7mm!important;
-      }
-
-      body.report-printing .report-stat{
-        padding:4mm!important;
-        border:1px solid #d7dbe0!important;
-        border-radius:3mm!important;
-        background:#fafafa!important;
-        break-inside:avoid;
-      }
-
-      body.report-printing .report-stat b{
-        font-size:16pt!important;
-      }
-
-      body.report-printing .report-stat span{
-        font-size:8pt!important;
-      }
-
-      body.report-printing .report-section{
-        margin-top:7mm!important;
-        break-inside:auto;
-      }
-
-      body.report-printing .report-section h3{
-        margin:0 0 3mm!important;
-        font-size:12pt!important;
-        break-after:avoid;
-      }
-
-      body.report-printing .report-table{
-        width:100%!important;
-        table-layout:fixed!important;
-        border-collapse:collapse!important;
-        font-size:8.5pt!important;
-      }
-
-      body.report-printing .report-table th,
-      body.report-printing .report-table td{
-        padding:2.2mm 2mm!important;
-        border-bottom:1px solid #e0e3e7!important;
-        line-height:1.25!important;
-        overflow-wrap:anywhere;
-      }
-
-      /* Kompetenzname bekommt genug Platz, die sechs Zahlen-Spalten bleiben kompakt. */
-      body.report-printing .report-table th:first-child,
-      body.report-printing .report-table td:first-child{
-        width:46%!important;
-      }
-
-      body.report-printing .report-table th:not(:first-child),
-      body.report-printing .report-table td:not(:first-child){
-        width:9%!important;
-      }
-
-      body.report-printing .report-table thead{
-        display:table-header-group;
-      }
-
-      body.report-printing .report-table tr{
-        break-inside:avoid;
-      }
-
-      body.report-printing .report-question{
-        padding:2.5mm 0!important;
-        break-inside:avoid;
-        font-size:9pt!important;
-      }
-
-      body.report-printing .report-question-status{
-        font-size:7.5pt!important;
-      }
-
-      body.report-printing .report-footer{
-        margin-top:8mm!important;
-        padding:4mm 0 0!important;
-        border-top:1px solid #e0e3e7;
-        font-size:8pt!important;
+      .question.has-votes .vote-count-badge{
+        grid-column:2;
+        justify-self:start;
       }
     }
 
-    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
-  </style>
+</style>
 </head>
 <body>
 <div class="app">
   <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
   <header class="topbar">
-    <div class="brand">Klausurcheck 10d<small>Quadratische Funktionen und Gleichungen</small></div>
+    <div class="brand"><span id="brandTitle">Klausurcheck</span><small id="brandTopic">Thema</small></div>
     <div class="spacer"></div>
     <div id="dashChips" style="display:none;gap:8px;align-items:center;flex-wrap:wrap"></div>
     <button id="reportBtn" class="small-btn" type="button" style="display:none">Auswertung</button>
+    <button id="headerMilestoneBtn" class="small-btn" type="button" style="display:none" title="Aktuellen Klassenstand als markierten Messpunkt speichern">Messpunkt speichern</button>
     <button id="resetAllBtn" class="small-btn reset-btn" type="button" style="display:none">Alles zurücksetzen</button>
     <button id="changePasswordBtn" class="small-btn" type="button" style="display:none">Passwort ändern</button>
     <button id="logoutBtn" class="small-btn" type="button" style="display:none">Abmelden</button>
@@ -942,15 +981,15 @@
   <main id="studentView" class="student-main" style="display:none">
     <section class="hero">
       <div>
-        <h1>Wie sicher fühlst du dich?</h1>
-        <p class="subtitle">Kurzer Check vor der Klausur. Bitte ehrlich einschätzen – die Angaben helfen bei der Vorbereitung.</p>
+        <h1 id="studentHeroTitle">Wie sicher fühlst du dich?</h1>
+        <p class="subtitle" id="studentHeroSubtitle">Kurzer Check vor der Klausur. Bitte ehrlich einschätzen – die Angaben helfen bei der Vorbereitung.</p>
       </div>
     </section>
 
     <section class="panel" id="overallPanel">
       <div class="overall-card" id="overallCard">
         <div>
-          <h2>Wie sicher fühlst du dich insgesamt für die Klausur?</h2>
+          <h2 id="studentOverallQuestion">Wie sicher fühlst du dich insgesamt für die Klausur?</h2>
           <p class="lead">1 = sehr unsicher · 5 = sehr sicher</p>
         </div>
         <div id="overallRating" class="rating" aria-label="Gesamtgefühl"></div>
@@ -974,7 +1013,7 @@
     </section>
 
     <section class="panel">
-      <h2>Welche Fragen hast du noch?</h2>
+      <h2 id="studentQuestionsTitle">Welche Fragen hast du noch?</h2>
       <p class="lead">Du kannst mehrere Fragen nacheinander absenden – unabhängig von deiner Einschätzung oben.</p>
       <div style="height:12px"></div>
       <textarea id="questionInput" maxlength="350" placeholder="Deine Frage …"></textarea>
@@ -984,6 +1023,18 @@
         <span id="charCount" class="hint">0 / 350</span>
       </div>
       <div id="questionSaved" class="saved" role="status">✓ Frage wurde gespeichert.</div>
+
+      <div id="studentVoteArea" class="student-vote-area" style="display:none">
+        <div class="student-vote-head">
+          <div>
+            <h3>Fragen der Klasse</h3>
+            <p class="lead">Betrifft dich eine offene Frage auch? Dann kannst du sie hochstimmen. Eigene Fragen können nicht hochgestimmt werden.</p>
+          </div>
+          <div class="student-vote-note">▲ = betrifft mich auch</div>
+        </div>
+        <div id="studentQuestionList" class="student-vote-list"></div>
+      </div>
+
     </section>
 
     <section id="lastFeedbackPanel" class="panel" style="display:none">
@@ -994,14 +1045,14 @@
       </div>
     </section>
 
-    <p class="footer-note">Die Rückmeldung wird anonym gespeichert. Dein Browser erhält dafür lediglich eine technische, anonyme Kennung. · Version 1.0.1</p>
+    <p class="footer-note">Du musst keinen Namen angeben. Deine Rückmeldung wird mit einer zufälligen technischen Kennung gespeichert, damit du sie später noch ändern kannst. · Version <span data-app-version></span></p>
   </main>
 
   <main id="dashboardView" style="display:none">
     <section class="hero dashboard-hero">
       <div>
-        <h1>Übersicht 10d</h1>
-        <p class="subtitle">Kompetenzeinschätzung und offene Fragen zur Klausur.</p>
+        <h1 id="dashboardHeroTitle">Übersicht</h1>
+        <p class="subtitle" id="dashboardHeroSubtitle">Kompetenzeinschätzung und offene Fragen zur Klausur.</p>
       </div>
     </section>
 
@@ -1053,8 +1104,8 @@
     <section class="panel">
       <div class="overall-wire">
         <div>
-          <h2>Gesamtgefühl der Klasse</h2>
-          <p>Wie sicher fühlt sich die Klasse insgesamt für die Klausur?</p>
+          <h2 id="dashboardOverallTitle">Gesamtgefühl der Klasse</h2>
+          <p id="dashboardOverallPrompt">Wie sicher fühlt sich die Klasse insgesamt für die Klausur?</p>
         </div>
         <div id="overallStars" class="star-row" aria-label="Durchschnittliche Sicherheit"></div>
         <div>
@@ -1081,6 +1132,7 @@
       <div id="dashboardCompetencies" class="competency-dashboard"></div>
     </section>
 
+
     <section class="panel">
       <div class="dashboard-section-head">
         <div>
@@ -1103,7 +1155,25 @@
       </details>
     </section>
 
-    <p class="footer-note">Live-Dashboard · automatische Aktualisierung alle 5 Sekunden · Version 1.0.1</p>
+    <details class="panel history-details" id="historyPanel" style="display:none">
+      <summary class="history-summary">
+        <span class="history-summary-main">
+          <span class="history-summary-title">Verlauf der Stunde</span>
+          <span class="history-summary-meta" id="historySummaryMeta">Wird vorbereitet …</span>
+        </span>
+        <span class="history-summary-arrow" aria-hidden="true">›</span>
+      </summary>
+      <div class="history-inner">
+        <div class="history-actions">
+          <select id="historyMetric" class="history-select" aria-label="Kennzahl für Verlauf"></select>
+        </div>
+        <div id="historyStatus" class="history-status">Verlauf wird geladen …</div>
+        <div id="historyChart" class="history-chart"></div>
+        <div id="milestoneList" class="milestone-list"></div>
+      </div>
+    </details>
+
+    <p class="footer-note">Live-Dashboard · automatische Aktualisierung alle 5 Sekunden · Version <span data-app-version></span></p>
     </div>
   </main>
 
@@ -1117,64 +1187,67 @@
         </div>
         <div class="report-actions">
           <button id="reportCsvBtn" class="small-btn" type="button">CSV exportieren</button>
-          <button id="reportPrintBtn" class="small-btn" type="button" title="Im Druckdialog ggf. Browser-Kopf- und Fußzeilen deaktivieren">Drucken / PDF</button>
+          <button id="reportPrintBtn" class="small-btn" type="button">Drucken / PDF</button>
           <button id="reportCloseBtn" class="small-btn" type="button">Schließen</button>
         </div>
       </div>
       <div id="reportBody" class="report-body"></div>
-      <div class="report-footer">Klausurcheck · Version 1.0.1</div>
+      <div class="report-footer">Klausurcheck · Version <span data-app-version></span></div>
     </section>
   </div>
 </div>
 
+<script src="./config.js"></script>
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-const APP_VERSION = "1.0.1";
-const SUPABASE_URL = 'https://tgokrdtlvtfyxaqscuwx.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_YKnRHgSUgHx6dj-wDHWvOA_OKEFAaaW';
+const CONFIG = window.KLAUSURCHECK_CONFIG;
+if(!CONFIG) throw new Error("config.js wurde nicht geladen.");
+
+const APP_VERSION = CONFIG.version || "1.0.0";
+const SUPABASE_URL = CONFIG.supabaseUrl;
+const SUPABASE_PUBLISHABLE_KEY = CONFIG.supabasePublishableKey;
+const competencies = CONFIG.competencies || [];
+const USAGE_MODE = CONFIG.usageMode || "klausur";
+const HISTORY_CONFIG = CONFIG.history || { enabled:true, autoMinutes:2 };
+const HISTORY_ENABLED = HISTORY_CONFIG.enabled !== false;
+const UPVOTES_ENABLED = CONFIG.upvotesEnabled === true;
+const AUTO_SNAPSHOT_MINUTES = Math.max(1, Math.min(30, Number(HISTORY_CONFIG.autoMinutes) || 2));
+if(!CONFIG.datasetId) throw new Error("datasetId fehlt in config.js.");
+if(!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) throw new Error("Supabase-Konfiguration fehlt.");
 const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+document.title = `${CONFIG.title || ("Klausurcheck " + CONFIG.className)} – ${CONFIG.topic}`;
+document.getElementById("brandTitle").textContent = CONFIG.title || ("Klausurcheck " + CONFIG.className);
+document.getElementById("brandTopic").textContent = CONFIG.topic || "";
+document.getElementById("dashboardHeroTitle").textContent = "Übersicht " + (CONFIG.className || "");
+document.querySelectorAll("[data-app-version]").forEach(el=>el.textContent = APP_VERSION);
+
+const usageTexts = USAGE_MODE === "diagnose" ? {
+  studentHeroTitle:"Wie sicher fühlst du dich?",
+  studentHeroSubtitle:"Kurzer Lernstandscheck. Bitte ehrlich einschätzen – die Angaben helfen dabei, den Unterricht passend auszurichten.",
+  studentOverallQuestion:"Wie sicher fühlst du dich aktuell in diesem Themenbereich?",
+  studentQuestionsTitle:"Was ist noch unklar?",
+  dashboardHeroSubtitle:"Kompetenzeinschätzung und offene Fragen zum aktuellen Lernstand.",
+  dashboardOverallTitle:"Gesamtgefühl der Lerngruppe",
+  dashboardOverallPrompt:"Wie sicher fühlt sich die Lerngruppe aktuell in diesem Themenbereich?"
+} : {
+  studentHeroTitle:"Wie sicher fühlst du dich?",
+  studentHeroSubtitle:"Kurzer Check vor der Klausur. Bitte ehrlich einschätzen – die Angaben helfen bei der Vorbereitung.",
+  studentOverallQuestion:"Wie sicher fühlst du dich insgesamt für die Klausur?",
+  studentQuestionsTitle:"Welche Fragen hast du noch?",
+  dashboardHeroSubtitle:"Kompetenzeinschätzung und offene Fragen zur Klausur.",
+  dashboardOverallTitle:"Gesamtgefühl der Klasse",
+  dashboardOverallPrompt:"Wie sicher fühlt sich die Klasse insgesamt für die Klausur?"
+};
+Object.entries(usageTexts).forEach(([id,text])=>{
+  const el = document.getElementById(id);
+  if(el) el.textContent = text;
+});
+
 
 const params = new URLSearchParams(location.search);
 const view = params.get("view") === "dashboard" ? "dashboard" : "student";
-
-const competencies = [
-  {
-    id:"zuordnen",
-    title:"Parabeln & Gleichungen zuordnen/beschreiben",
-    info:"Graph und Funktionsgleichung einander zuordnen; Streckung, Stauchung, Spiegelung und Verschiebung erkennen und beschreiben."
-  },
-  {
-    id:"punkte",
-    title:"Punkte auf Parabeln",
-    info:"Punktprobe durchführen und fehlende Koordinaten bestimmen."
-  },
-  {
-    id:"gleichung",
-    title:"Funktionsgleichungen bestimmen",
-    info:"Aus gegebenen Punkten, dem Scheitelpunkt oder anderen Informationen die Funktionsgleichung einer Parabel bestimmen."
-  },
-  {
-    id:"scheitel",
-    title:"Scheitelpunkte bestimmen",
-    info:"Aus einer quadratischen Funktionsgleichung den Scheitelpunkt bestimmen."
-  },
-  {
-    id:"nullstellen",
-    title:"Quadratische Gleichungen & Nullstellen",
-    info:"Verschiedene Formen und Sonderfälle erkennen, ein geeignetes Lösungsverfahren auswählen und Nullstellen bestimmen."
-  },
-  {
-    id:"schnittpunkte",
-    title:"Schnittpunkte",
-    info:"Schnittpunkte zweier Funktionen bestimmen und dafür eine passende Gleichung aufstellen."
-  },
-  {
-    id:"anwendung",
-    title:"Anwendungsaufgaben",
-    info:"Erkennen, welcher bekannte Aufgabentyp in einer Sachaufgabe steckt, einen passenden Ansatz wählen und das Ergebnis im Sachzusammenhang deuten."
-  }
-];
 
 let currentUser = null;
 let myResponse = null;
@@ -1184,11 +1257,27 @@ let previousResponses = null;
 let previousQuestions = null;
 let latestResponses = [];
 let latestQuestions = [];
+let latestSnapshots = [];
+let historyAvailable = HISTORY_ENABLED;
+let autoSnapshotTimer = null;
+let autoSnapshotBusy = false;
+let latestVotes = [];
+let studentQuestionTimer = null;
 
 const studentView = document.getElementById("studentView");
 const dashboardView = document.getElementById("dashboardView");
 studentView.style.display = view === "student" ? "block" : "none";
 dashboardView.style.display = view === "dashboard" ? "block" : "none";
+
+function initHistoryMetric(){
+  const select = document.getElementById("historyMetric");
+  if(!select) return;
+  select.innerHTML = '<option value="overall">Gesamtgefühl</option>' + competencies.map(c=>`<option value="${c.id}">${c.title}</option>`).join("");
+  select.addEventListener("change",renderHistory);
+  if(!HISTORY_ENABLED) document.getElementById("historyPanel").style.display = "none";
+}
+initHistoryMetric();
+
 
 function fmtDate(ts){
   const d = new Date(ts);
@@ -1259,8 +1348,9 @@ async function getOrCreateStudentSession(){
 async function loadMyResponse(){
   if(!currentUser) return null;
   const { data, error } = await supabase
-    .from("responses")
+    .from("kc_responses")
     .select("*")
+    .eq("dataset_id", CONFIG.datasetId)
     .eq("user_id", currentUser.id)
     .maybeSingle();
   if(error) throw error;
@@ -1287,7 +1377,7 @@ function renderStudent(){
         </div>
         <div class="info-text" id="info_${c.id}">${c.info}</div>
       </div>
-      <div class="rating" aria-label="${c.title}">${ratingHTML("comp_"+c.id, mine?.[c.id] ?? null)}</div>
+      <div class="rating" aria-label="${c.title}">${ratingHTML("comp_"+c.id, mine?.ratings?.[c.id] ?? null)}</div>
     `;
     wrap.appendChild(row);
   });
@@ -1349,14 +1439,15 @@ async function saveRatings(){
   setBusy(btn,true,"Speichere …");
   try{
     const payload = {
+      dataset_id: CONFIG.datasetId,
       user_id: currentUser.id,
       overall,
-      ...ratings,
+      ratings,
       updated_at: new Date().toISOString()
     };
     const { error } = await supabase
-      .from("responses")
-      .upsert(payload, { onConflict:"user_id" });
+      .from("kc_responses")
+      .upsert(payload, { onConflict:"dataset_id,user_id" });
     if(error) throw error;
     await loadMyResponse();
     renderStudent();
@@ -1383,14 +1474,15 @@ async function sendQuestion(){
   setBusy(btn,true,"Sende …");
   try{
     const { error } = await supabase
-      .from("questions")
-      .insert({ user_id: currentUser.id, text });
+      .from("kc_questions")
+      .insert({ dataset_id: CONFIG.datasetId, user_id: currentUser.id, text });
     if(error) throw error;
     input.value = "";
     document.getElementById("charCount").textContent = "0 / 350";
     const msg = document.getElementById("questionSaved");
     msg.classList.add("show");
     setTimeout(()=>msg.classList.remove("show"),2500);
+    if(UPVOTES_ENABLED) await loadStudentQuestionBoard();
   } catch(err){
     console.error(err);
     alert("Die Frage konnte nicht gespeichert werden. Bitte versuche es noch einmal.");
@@ -1399,9 +1491,121 @@ async function sendQuestion(){
   }
 }
 
+
+async function loadStudentQuestionBoard(){
+  const area = document.getElementById("studentVoteArea");
+  if(!UPVOTES_ENABLED || !currentUser){
+    area.style.display = "none";
+    return;
+  }
+  area.style.display = "block";
+  const wrap = document.getElementById("studentQuestionList");
+  try{
+    const qResult = await supabase
+      .from("kc_questions")
+      .select("id,user_id,text,created_at,completed,hidden")
+      .eq("dataset_id",CONFIG.datasetId)
+      .eq("completed",false)
+      .eq("hidden",false);
+    if(qResult.error) throw qResult.error;
+
+    const vResult = await supabase
+      .from("kc_question_votes")
+      .select("question_id,user_id")
+      .eq("dataset_id",CONFIG.datasetId);
+    if(vResult.error) throw vResult.error;
+
+    const votes = vResult.data || [];
+    const countMap = new Map();
+    const mine = new Set();
+    votes.forEach(v=>{
+      countMap.set(v.question_id,(countMap.get(v.question_id)||0)+1);
+      if(v.user_id===currentUser.id) mine.add(v.question_id);
+    });
+
+    const questions = (qResult.data || []).map(q=>({
+      ...q,
+      vote_count:countMap.get(q.id)||0,
+      voted_by_me:mine.has(q.id)
+    })).sort((a,b)=>
+      (b.vote_count-a.vote_count) ||
+      (new Date(b.created_at)-new Date(a.created_at))
+    );
+
+    wrap.innerHTML = "";
+    if(!questions.length){
+      const empty=document.createElement("div");
+      empty.className="empty";
+      empty.textContent="Noch keine offenen Fragen der Klasse.";
+      wrap.appendChild(empty);
+      return;
+    }
+
+    questions.forEach(q=>{
+      const row=document.createElement("div");
+      row.className="student-vote-item";
+
+      const vote=document.createElement("button");
+      vote.type="button";
+      vote.className="vote-btn"+(q.voted_by_me?" selected":"");
+      vote.textContent=`▲ ${q.vote_count}`;
+      const own=q.user_id===currentUser.id;
+      if(own){
+        vote.disabled=true;
+        vote.title="Eigene Frage";
+      } else {
+        vote.title=q.voted_by_me ? "Stimme zurücknehmen" : "Frage hochstimmen";
+        vote.addEventListener("click",()=>toggleQuestionVote(q,vote));
+      }
+
+      const body=document.createElement("div");
+      const text=document.createElement("div");
+      text.className="student-vote-text";
+      text.textContent=q.text;
+      const meta=document.createElement("div");
+      meta.className="student-vote-meta";
+      meta.textContent=(own?"Deine Frage · ":"")+timeAgo(q.created_at);
+      body.append(text,meta);
+      row.append(vote,body);
+      wrap.appendChild(row);
+    });
+  }catch(err){
+    console.error(err);
+    wrap.innerHTML='<div class="empty">Die Fragenliste konnte nicht geladen werden. Prüfe, ob die Upvote-Erweiterung in Supabase eingerichtet wurde.</div>';
+  }
+}
+
+async function toggleQuestionVote(q,button){
+  if(!UPVOTES_ENABLED || !currentUser || q.user_id===currentUser.id) return;
+  button.disabled=true;
+  try{
+    if(q.voted_by_me){
+      let req=supabase.from("kc_question_votes").delete().eq("question_id",q.id).eq("user_id",currentUser.id);
+      req=req.eq("dataset_id",CONFIG.datasetId);
+      const {error}=await req;
+      if(error) throw error;
+    }else{
+      const {error}=await supabase.from("kc_question_votes").insert({dataset_id:CONFIG.datasetId, question_id:q.id,user_id:currentUser.id});
+      if(error) throw error;
+    }
+    await loadStudentQuestionBoard();
+  }catch(err){
+    console.error(err);
+    alert("Die Stimme konnte nicht gespeichert werden.");
+    button.disabled=false;
+  }
+}
+
+function applyVoteCounts(questions,votes){
+  const countMap=new Map();
+  (votes||[]).forEach(v=>countMap.set(v.question_id,(countMap.get(v.question_id)||0)+1));
+  questions.forEach(q=>q.vote_count=countMap.get(q.id)||0);
+  return questions;
+}
+
 function questionNode(q,mode){
   const el = document.createElement("div");
-  el.className = "question"+(q.completed?" completed":"");
+  el.className = "question"+(q.completed?" completed":"")+(UPVOTES_ENABLED?" has-votes":"");
   const checkbox = mode==="hidden" ? "" :
     `<input class="qcheck" type="checkbox" ${q.completed?"checked":""} aria-label="Frage als erledigt markieren">`;
   const action = mode==="hidden"
@@ -1411,6 +1615,7 @@ function questionNode(q,mode){
   el.innerHTML = `
     ${checkbox || "<span></span>"}
     <div class="qtext"></div>
+    ${UPVOTES_ENABLED ? `<span class="vote-count-badge" title="Stimmen">▲ ${q.vote_count||0}</span>` : ""}
     <span class="q-badge ${isNew?"":"spacer"}">${isNew?"neu":"–"}</span>
     <div class="qmeta">${timeAgo(q.created_at)}</div>
     ${action}
@@ -1424,7 +1629,7 @@ function questionNode(q,mode){
       q.completed = check.checked;
       el.classList.toggle("completed",q.completed);
       try{
-        const { error } = await supabase.from("questions").update({completed:q.completed}).eq("id",q.id);
+        const { error } = await supabase.from("kc_questions").update({completed:q.completed}).eq("dataset_id",CONFIG.datasetId).eq("id",q.id);
         if(error) throw error;
         await loadDashboardData();
       } catch(err){
@@ -1436,7 +1641,7 @@ function questionNode(q,mode){
     });
     el.querySelector(".hide").addEventListener("click", async ()=>{
       try{
-        const { error } = await supabase.from("questions").update({hidden:true}).eq("id",q.id);
+        const { error } = await supabase.from("kc_questions").update({hidden:true}).eq("dataset_id",CONFIG.datasetId).eq("id",q.id);
         if(error) throw error;
         await loadDashboardData();
       } catch(err){
@@ -1447,7 +1652,7 @@ function questionNode(q,mode){
   } else {
     el.querySelector(".restore").addEventListener("click", async ()=>{
       try{
-        const { error } = await supabase.from("questions").update({hidden:false}).eq("id",q.id);
+        const { error } = await supabase.from("kc_questions").update({hidden:false}).eq("dataset_id",CONFIG.datasetId).eq("id",q.id);
         if(error) throw error;
         await loadDashboardData();
       } catch(err){
@@ -1482,16 +1687,7 @@ function showToast(icon,title,detail=""){
 }
 
 function responseSignature(r){
-  return [
-    r.overall,
-    r.zuordnen,
-    r.punkte,
-    r.gleichung,
-    r.scheitel,
-    r.nullstellen,
-    r.schnittpunkte,
-    r.anwendung
-  ].join("|");
+  return [r.overall, ...competencies.map(c=>r.ratings?.[c.id] ?? "")].join("|");
 }
 
 function notifyDashboardChanges(responses,questions){
@@ -1546,6 +1742,178 @@ function notifyDashboardChanges(responses,questions){
   previousQuestions = currentQuestionSet;
 }
 
+
+function currentSnapshotData(kind="auto",label=null){
+  const responses = latestResponses || [];
+  if(!responses.length) return null;
+  const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
+  const overallAvg = avg(overallVals);
+  const ratings = {};
+  competencies.forEach(c=>{
+    const vals = responses.map(r=>Number(r.ratings?.[c.id])).filter(Number.isFinite);
+    ratings[c.id] = avg(vals);
+  });
+  const sigParts = [responses.length, overallAvg===null?"":overallAvg.toFixed(4)];
+  competencies.forEach(c=>sigParts.push(ratings[c.id]===null?"":Number(ratings[c.id]).toFixed(4)));
+  return {
+    dataset_id:CONFIG.datasetId,
+    kind,
+    label:label || null,
+    response_count:responses.length,
+    overall_avg:overallAvg,
+    ratings,
+    signature:sigParts.join("|")
+  };
+}
+
+function snapshotMetricValue(s,key){
+  const v = key === "overall" ? s.overall_avg : s.ratings?.[key];
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function escXml(value){
+  return String(value ?? "").replace(/[&<>\"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+}
+
+function historySvg(metricKey="overall",forReport=false){
+  const rows = [...latestSnapshots].sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
+  const points = rows.map(s=>({s,value:snapshotMetricValue(s,metricKey),time:new Date(s.captured_at)})).filter(p=>p.value!==null);
+  if(!points.length) return "";
+  const W=820,H=245,L=48,R=18,T=20,B=46;
+  const innerW=W-L-R, innerH=H-T-B;
+  const minT=points[0].time.getTime(), maxT=points[points.length-1].time.getTime();
+  const span=Math.max(1,maxT-minT);
+  const xFor=t=>points.length===1?L+innerW/2:L+((t.getTime()-minT)/span)*innerW;
+  const yFor=v=>T+((5-v)/4)*innerH;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Verlauf der Einschätzung">`;
+  for(let y=1;y<=5;y++){
+    const py=yFor(y);
+    svg+=`<line x1="${L}" y1="${py}" x2="${W-R}" y2="${py}" stroke="#e2e6ea" stroke-width="1"/>`;
+    svg+=`<text x="${L-12}" y="${py+4}" text-anchor="end" font-size="11" fill="#69717c">${y}</text>`;
+  }
+  if(points.length>1){
+    svg+=`<polyline fill="none" stroke="#2f765b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="${points.map(p=>`${xFor(p.time).toFixed(1)},${yFor(p.value).toFixed(1)}`).join(" ")}"/>`;
+  }
+  points.forEach((p,i)=>{
+    const x=xFor(p.time),y=yFor(p.value),manual=p.s.kind==="manual";
+    svg+=`<circle cx="${x}" cy="${y}" r="${manual?5.5:3.2}" fill="${manual?'#2f765b':'#7da997'}" stroke="#fff" stroke-width="1.5"/>`;
+    if(manual && p.s.label){
+      const label=escXml(p.s.label);
+      svg+=`<text x="${x}" y="${Math.max(12,y-10)}" text-anchor="middle" font-size="10" font-weight="700" fill="#2f5d4b">${label.length>22?label.slice(0,21)+'…':label}</text>`;
+    }
+  });
+  const tickIdx = points.length<=4 ? points.map((_,i)=>i) : [0,Math.floor((points.length-1)/2),points.length-1];
+  [...new Set(tickIdx)].forEach(i=>{
+    const p=points[i],x=xFor(p.time),lab=p.time.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    svg+=`<text x="${x}" y="${H-14}" text-anchor="middle" font-size="10" fill="#69717c">${lab}</text>`;
+  });
+  svg+=`</svg>`;
+  return svg;
+}
+
+function renderHistory(){
+  const panel=document.getElementById("historyPanel");
+  const headerBtn=document.getElementById("headerMilestoneBtn");
+  if(!panel) return;
+
+  if(!HISTORY_ENABLED){
+    panel.style.display="none";
+    if(headerBtn) headerBtn.style.display="none";
+    return;
+  }
+
+  const status=document.getElementById("historyStatus");
+  const chart=document.getElementById("historyChart");
+  const list=document.getElementById("milestoneList");
+  const summaryMeta=document.getElementById("historySummaryMeta");
+
+  if(!historyAvailable){
+    panel.style.display="none";
+    if(headerBtn) headerBtn.style.display="none";
+    return;
+  }
+
+  if(headerBtn && view==="dashboard") headerBtn.style.display="inline-block";
+
+  if(latestSnapshots.length < 2){
+    panel.style.display="none";
+    return;
+  }
+
+  panel.style.display="block";
+  const manual=latestSnapshots.filter(s=>s.kind==="manual").sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
+  if(summaryMeta){
+    summaryMeta.textContent=`${latestSnapshots.length} Messpunkte · ${manual.length} markiert · in der Auswertung vollständig dargestellt`;
+  }
+  status.textContent=`Automatische Sicherung alle ${AUTO_SNAPSHOT_MINUTES} Min. bei Änderungen · ${latestSnapshots.length} Momentaufnahme${latestSnapshots.length===1?"":"n"}`;
+
+  const key=document.getElementById("historyMetric")?.value || "overall";
+  const svg=historySvg(key,false);
+  chart.innerHTML=svg || '<div class="history-empty">Noch keine Verlaufsdaten verfügbar.</div>';
+  list.innerHTML=manual.map(s=>{
+    const time=new Date(s.captured_at).toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+    return `<span class="milestone-chip"><span class="history-manual-dot">●</span><b>${escXml(s.label || "Messpunkt")}</b><span>${time} · ${s.response_count} Rückm.</span></span>`;
+  }).join("");
+}
+
+async function loadSnapshots(){
+  if(!HISTORY_ENABLED || !historyAvailable) return;
+  const result=await supabase.from("kc_snapshots").select("*").eq("dataset_id",CONFIG.datasetId).order("captured_at",{ascending:true});
+  if(result.error){
+    console.warn("Verlauf nicht verfügbar:",result.error);
+    historyAvailable=false;
+    latestSnapshots=[];
+  }else{
+    historyAvailable=true;
+    latestSnapshots=result.data || [];
+  }
+  renderHistory();
+}
+
+async function saveSnapshot(kind="auto",label=null){
+  if(!HISTORY_ENABLED || !historyAvailable || autoSnapshotBusy) return false;
+  const payload=currentSnapshotData(kind,label);
+  if(!payload) return false;
+  if(kind==="auto"){
+    const last=latestSnapshots.length ? latestSnapshots[latestSnapshots.length-1] : null;
+    if(last?.signature===payload.signature) return false;
+  }
+  autoSnapshotBusy=true;
+  try{
+    const {data,error}=await supabase.from("kc_snapshots").insert(payload).select("*").single();
+    if(error) throw error;
+    latestSnapshots.push(data);
+    latestSnapshots.sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
+    renderHistory();
+    return true;
+  }catch(err){
+    console.warn("Momentaufnahme konnte nicht gespeichert werden:",err);
+    historyAvailable=false;
+    renderHistory();
+    return false;
+  }finally{autoSnapshotBusy=false}
+}
+
+async function saveManualMilestone(){
+  if(!latestResponses.length){alert("Es liegen noch keine Rückmeldungen vor.");return}
+  const now=new Date();
+  const entered=prompt("Kurzer Titel für den Messpunkt (optional):","");
+  if(entered===null) return;
+  const fallback="Messpunkt "+now.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"});
+  const label=(entered.trim() || fallback).slice(0,120);
+  const ok=await saveSnapshot("manual",label);
+  if(ok) showToast("●","Messpunkt gespeichert",label);
+}
+
+function startAutoSnapshots(){
+  clearInterval(autoSnapshotTimer);
+  if(!HISTORY_ENABLED || !historyAvailable) return;
+  // Erster Stand sofort, falls er noch nicht gespeichert wurde.
+  saveSnapshot("auto");
+  autoSnapshotTimer=setInterval(()=>saveSnapshot("auto"),AUTO_SNAPSHOT_MINUTES*60*1000);
+}
+
 function renderDashboard(responses,questions){
   const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
   const overallAvg = avg(overallVals);
@@ -1553,7 +1921,9 @@ function renderDashboard(responses,questions){
     overallAvg===null ? "–" : overallAvg.toFixed(1).replace(".",",");
 
   const open = questions.filter(q=>!q.hidden && !q.completed)
-    .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    .sort((a,b)=>UPVOTES_ENABLED
+      ? ((Number(b.vote_count||0)-Number(a.vote_count||0)) || (new Date(b.created_at)-new Date(a.created_at)))
+      : (new Date(b.created_at)-new Date(a.created_at)));
   const done = questions.filter(q=>!q.hidden && q.completed)
     .sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   const hidden = questions.filter(q=>q.hidden)
@@ -1586,12 +1956,12 @@ function renderDashboard(responses,questions){
   document.getElementById("overallScoreNote").textContent =
     responses.length ? `Durchschnitt aus ${responses.length} Rückmeldungen` : "Noch keine Rückmeldungen";
   document.getElementById("openQuestionsLabel").textContent =
-    `${open.length} offene Frage${open.length===1?"":"n"} · neueste zuerst`;
+    `${open.length} offene Frage${open.length===1?"":"n"} · ${UPVOTES_ENABLED?"meiste Stimmen zuerst":"neueste zuerst"}`;
 
   const compWrap = document.getElementById("dashboardCompetencies");
   compWrap.innerHTML = "";
   competencies.forEach(c=>{
-    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    const vals = responses.map(r=>Number(r.ratings?.[c.id])).filter(Number.isFinite);
     const a = avg(vals);
     const distCounts = counts(vals);
     const percent = a===null ? 0 : Math.max(0,Math.min(100,(a/5)*100));
@@ -1631,19 +2001,27 @@ function renderDashboard(responses,questions){
 
 async function loadDashboardData(){
   try{
-    const [respResult, qResult] = await Promise.all([
-      supabase.from("responses").select("*"),
-      supabase.from("questions").select("*").order("created_at",{ascending:false})
-    ]);
+    const queries = [
+      supabase.from("kc_responses").select("*").eq("dataset_id",CONFIG.datasetId),
+      supabase.from("kc_questions").select("*").eq("dataset_id",CONFIG.datasetId).order("created_at",{ascending:false})
+    ];
+    if(UPVOTES_ENABLED) queries.push(
+      supabase.from("kc_question_votes").select("question_id,user_id").eq("dataset_id",CONFIG.datasetId)
+    );
+    const [respResult, qResult, vResult] = await Promise.all(queries);
     if(respResult.error) throw respResult.error;
     if(qResult.error) throw qResult.error;
+    if(vResult?.error) console.warn("Upvote-Daten konnten nicht geladen werden:",vResult.error);
     lastDashboardUpdate = new Date();
     const responses = respResult.data || [];
-    const questions = qResult.data || [];
+    const votes = vResult?.error ? [] : (vResult?.data || []);
+    const questions = applyVoteCounts(qResult.data || [],votes);
     latestResponses = responses;
     latestQuestions = questions;
+    latestVotes = votes;
     notifyDashboardChanges(responses,questions);
     renderDashboard(responses,questions);
+    await loadSnapshots();
   } catch(err){
     console.error(err);
     showConnectionError("Das Dashboard konnte die Daten nicht laden. Prüfe die Verbindung und melde dich ggf. erneut an.");
@@ -1657,6 +2035,23 @@ function csvCell(value){
   return '"' + s.replaceAll('"','""') + '"';
 }
 
+
+function historyReportHtml(){
+  if(!HISTORY_ENABLED || !latestSnapshots.length) return "";
+  const first=latestSnapshots[0], last=latestSnapshots[latestSnapshots.length-1];
+  const metrics=[{id:"overall",title:"Gesamtgefühl"},...competencies.map(c=>({id:c.id,title:c.title}))];
+  const rows=metrics.map(m=>{
+    const a=snapshotMetricValue(first,m.id), b=snapshotMetricValue(last,m.id);
+    if(a===null || b===null) return "";
+    const delta=b-a;
+    const sign=delta>0?"+":"";
+    return `<tr><td>${escXml(m.title)}</td><td class="num">${a.toFixed(2).replace(".",",")}</td><td class="num">${b.toFixed(2).replace(".",",")}</td><td class="num">${sign}${delta.toFixed(2).replace(".",",")}</td></tr>`;
+  }).join("");
+  const manual=latestSnapshots.filter(s=>s.kind==="manual").sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at));
+  const manualRows=manual.map(s=>`<tr><td>${escXml(s.label || "Messpunkt")}</td><td>${new Date(s.captured_at).toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"})}</td><td class="num">${s.response_count}</td><td class="num">${Number(s.overall_avg).toFixed(2).replace(".",",")}</td></tr>`).join("");
+  return `<section class="report-section"><h3>Verlauf</h3><div class="qmeta" style="margin-bottom:3mm">Erster gespeicherter Stand: ${first.response_count} Rückmeldungen · letzter Stand: ${last.response_count} Rückmeldungen. Veränderungen können deshalb sowohl durch geänderte Einschätzungen als auch durch neu hinzugekommene Rückmeldungen entstehen.</div><div class="report-history-chart">${historySvg("overall",true)}</div><table class="report-table"><thead><tr><th>Bereich</th><th class="num">Start</th><th class="num">Ende</th><th class="num">Δ</th></tr></thead><tbody>${rows}</tbody></table>${manual.length?`<h3 style="margin-top:5mm">Markierte Messpunkte</h3><table class="report-table"><thead><tr><th>Titel</th><th>Zeit</th><th class="num">Rückm.</th><th class="num">Gesamt Ø</th></tr></thead><tbody>${manualRows}</tbody></table>`:""}</section>`;
+}
+
 function buildReport(){
   const responses = latestResponses || [];
   const questions = latestQuestions || [];
@@ -1668,11 +2063,11 @@ function buildReport(){
   const hidden = questions.filter(q=>q.hidden);
 
   document.getElementById("reportMeta").textContent =
-    "10d · Quadratische Funktionen und Gleichungen · " +
+    `${CONFIG.className} · ${CONFIG.topic} · ` +
     new Date().toLocaleString("de-DE",{dateStyle:"medium",timeStyle:"short"});
 
   const competenceRows = competencies.map(c=>{
-    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    const vals = responses.map(r=>Number(r.ratings?.[c.id])).filter(Number.isFinite);
     const a = avg(vals);
     const cs = counts(vals);
     return `
@@ -1692,6 +2087,7 @@ function buildReport(){
       return `
         <div class="report-question">
           <span class="report-question-status">${status}</span>
+          ${UPVOTES_ENABLED ? `<span class="report-question-status">▲ ${q.vote_count||0}</span>` : ""}
           ${safeText.innerHTML}
         </div>`;
     }).join("");
@@ -1722,6 +2118,8 @@ function buildReport(){
       </table>
     </section>
 
+    ${historyReportHtml()}
+
     <section class="report-section">
       <h3>Fragen (${questions.length})</h3>
       ${questionRows || '<div class="empty">Keine Fragen eingegangen.</div>'}
@@ -1748,7 +2146,7 @@ function exportReportCsv(){
   const responses = latestResponses || [];
   const questions = latestQuestions || [];
   const lines = [];
-  lines.push(["Klausurcheck 10d","Quadratische Funktionen und Gleichungen","Version "+APP_VERSION].map(csvCell).join(";"));
+  lines.push([CONFIG.title || ("Klausurcheck "+CONFIG.className),CONFIG.topic,"Version "+APP_VERSION].map(csvCell).join(";"));
   lines.push(["Export",new Date().toLocaleString("de-DE")].map(csvCell).join(";"));
   lines.push([]);
   const overallVals = responses.map(r=>Number(r.overall)).filter(Number.isFinite);
@@ -1759,21 +2157,35 @@ function exportReportCsv(){
   lines.push([]);
   lines.push(["Kompetenz","Durchschnitt","1","2","3","4","5"].map(csvCell).join(";"));
   competencies.forEach(c=>{
-    const vals = responses.map(r=>Number(r[c.id])).filter(Number.isFinite);
+    const vals = responses.map(r=>Number(r.ratings?.[c.id])).filter(Number.isFinite);
     lines.push([c.title, avg(vals)?.toFixed(2) ?? "", ...counts(vals)].map(csvCell).join(";"));
   });
+  if(HISTORY_ENABLED && latestSnapshots.length){
+    lines.push([]);
+    lines.push(["Verlauf / Momentaufnahmen"].map(csvCell).join(";"));
+    lines.push(["Zeitpunkt","Typ","Titel","Rückmeldungen","Gesamtgefühl",...competencies.map(c=>c.title)].map(csvCell).join(";"));
+    [...latestSnapshots].sort((a,b)=>new Date(a.captured_at)-new Date(b.captured_at)).forEach(s=>{
+      lines.push([new Date(s.captured_at).toLocaleString("de-DE"),s.kind,s.label||"",s.response_count,s.overall_avg??"",...competencies.map(c=>s.ratings?.[c.id]??"")].map(csvCell).join(";"));
+    });
+  }
   lines.push([]);
-  lines.push(["Fragen","Status","Zeitpunkt"].map(csvCell).join(";"));
+  lines.push((UPVOTES_ENABLED
+    ? ["Fragen","Status","Stimmen","Zeitpunkt"]
+    : ["Fragen","Status","Zeitpunkt"]).map(csvCell).join(";"));
   [...questions].sort((a,b)=>new Date(a.created_at)-new Date(b.created_at)).forEach(q=>{
     const status = q.hidden ? "ausgeblendet" : q.completed ? "erledigt" : "offen";
-    lines.push([q.text,status,new Date(q.created_at).toLocaleString("de-DE")].map(csvCell).join(";"));
+    const row = UPVOTES_ENABLED
+      ? [q.text,status,q.vote_count||0,new Date(q.created_at).toLocaleString("de-DE")]
+      : [q.text,status,new Date(q.created_at).toLocaleString("de-DE")];
+    lines.push(row.map(csvCell).join(";"));
   });
 
   const blob = new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "klausurcheck-10d-auswertung.csv";
+  const safeDataset = (CONFIG.datasetId || "klausurcheck").replace(/[^a-z0-9_-]+/gi,"-");
+  a.download = safeDataset + "-auswertung.csv";
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -1787,6 +2199,7 @@ function showPasswordRecovery(message=""){
   document.getElementById("teacherLoginPanel").style.display = "none";
   document.getElementById("dashboardContent").style.display = "none";
   document.getElementById("reportBtn").style.display = "none";
+  document.getElementById("headerMilestoneBtn").style.display = "none";
   document.getElementById("resetAllBtn").style.display = "none";
   document.getElementById("changePasswordBtn").style.display = "none";
   document.getElementById("logoutBtn").style.display = "none";
@@ -1866,6 +2279,7 @@ function showTeacherLogin(message=""){
   document.getElementById("teacherLoginPanel").style.display = "block";
   document.getElementById("dashboardContent").style.display = "none";
   document.getElementById("reportBtn").style.display = "none";
+  document.getElementById("headerMilestoneBtn").style.display = "none";
   document.getElementById("resetAllBtn").style.display = "none";
   document.getElementById("changePasswordBtn").style.display = "none";
   document.getElementById("logoutBtn").style.display = "none";
@@ -1890,6 +2304,7 @@ async function showDashboard(){
   previousResponses = null;
   previousQuestions = null;
   await loadDashboardData();
+  startAutoSnapshots();
   clearInterval(dashboardTimer);
   dashboardTimer = setInterval(loadDashboardData,5000);
 }
@@ -1924,9 +2339,14 @@ async function initStudent(){
     await getOrCreateStudentSession();
     await loadMyResponse();
     renderStudent();
+    if(UPVOTES_ENABLED){
+      await loadStudentQuestionBoard();
+      clearInterval(studentQuestionTimer);
+      studentQuestionTimer=setInterval(loadStudentQuestionBoard,5000);
+    }
   } catch(err){
     console.error(err);
-    showConnectionError("Die anonyme Verbindung konnte nicht hergestellt werden. Bitte Seite neu laden oder die Lehrkraft informieren.");
+    showConnectionError("Die Verbindung konnte nicht hergestellt werden. Bitte Seite neu laden oder die Lehrkraft informieren.");
   }
 }
 
@@ -1976,25 +2396,27 @@ async function resetAllData(){
   if(!first) return;
 
   const second = confirm(
-    "Letzte Bestätigung:\n\nAlle Rückmeldungen und Fragen der 10d jetzt endgültig löschen?"
+    `Letzte Bestätigung:\n\nAlle Rückmeldungen und Fragen für ${CONFIG.className} / ${CONFIG.topic} jetzt endgültig löschen?`
   );
   if(!second) return;
 
   const btn = document.getElementById("resetAllBtn");
   setBusy(btn,true,"Setze zurück …");
   try{
-    // Die Null-UUID ist kein gültiger Datensatz bei uns; neq() trifft daher alle Zeilen.
-    const zeroUuid = "00000000-0000-0000-0000-000000000000";
-    const qResult = await supabase.from("questions").delete().neq("id",zeroUuid);
+    if(HISTORY_ENABLED && historyAvailable){
+      const sResult = await supabase.from("kc_snapshots").delete().eq("dataset_id",CONFIG.datasetId);
+      if(sResult.error) throw sResult.error;
+    }
+    const qResult = await supabase.from("kc_questions").delete().eq("dataset_id",CONFIG.datasetId);
     if(qResult.error) throw qResult.error;
 
-    const rResult = await supabase.from("responses").delete().neq("id",zeroUuid);
+    const rResult = await supabase.from("kc_responses").delete().eq("dataset_id",CONFIG.datasetId);
     if(rResult.error) throw rResult.error;
 
     previousResponses = new Map();
     previousQuestions = new Set();
     await loadDashboardData();
-    showToast("✓","Alles zurückgesetzt","Rückmeldungen und Fragen wurden gelöscht.");
+    showToast("✓","Alles zurückgesetzt","Rückmeldungen, Fragen und Verlaufsdaten wurden gelöscht.");
   } catch(err){
     console.error(err);
     alert(
@@ -2007,20 +2429,15 @@ async function resetAllData(){
 
 
 document.getElementById("reportBtn").addEventListener("click",openReport);
+document.getElementById("headerMilestoneBtn").addEventListener("click",saveManualMilestone);
 document.getElementById("reportCloseBtn").addEventListener("click",closeReport);
 document.querySelector("[data-report-close]").addEventListener("click",closeReport);
 document.getElementById("reportCsvBtn").addEventListener("click",exportReportCsv);
 document.getElementById("reportPrintBtn").addEventListener("click",()=>{
   document.body.classList.add("report-printing");
-  // Safari kann window.print() asynchron behandeln. Deshalb die Druckklasse
-  // NICHT per kurzem Timeout entfernen, sondern erst nach dem Druckdialog.
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>window.print());
-  });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>window.print()));
 });
-window.addEventListener("afterprint",()=>{
-  document.body.classList.remove("report-printing");
-});
+window.addEventListener("afterprint",()=>document.body.classList.remove("report-printing"));
 document.getElementById("resetAllBtn").addEventListener("click",resetAllData);
 document.getElementById("changePasswordBtn").addEventListener("click",()=>{
   showPasswordRecovery();
@@ -2035,6 +2452,7 @@ document.getElementById("teacherPassword").addEventListener("keydown",e=>{
 });
 document.getElementById("logoutBtn").addEventListener("click",async()=>{
   clearInterval(dashboardTimer);
+  clearInterval(autoSnapshotTimer);
   await supabase.auth.signOut();
   currentUser = null;
   previousResponses = null;
